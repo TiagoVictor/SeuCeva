@@ -1,6 +1,7 @@
 ﻿namespace SeuCevApi.Model
 {
-    public class TipoPlano
+    public class TipoPlano : Base
     {
+        public string Descricao { get; set; }
     }
 }
