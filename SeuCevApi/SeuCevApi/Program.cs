@@ -13,6 +13,7 @@ builder.Services.AddTransient<IEnderecoRepository, EnderecoRepository>();
 builder.Services.AddTransient<IOfertaRepository, OfertaRepository>();
 builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddTransient<ITipoClienteRepository, TipoClienteRepository>();
+builder.Services.AddTransient<ITipoPlanoRepository, TipoPlanoRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
