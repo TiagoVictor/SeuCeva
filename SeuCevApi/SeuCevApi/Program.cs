@@ -1,5 +1,7 @@
 using SeuCevApi.Data.Repository;
 using SeuCevApi.Data.Repository.Interface;
+using SeuCevApi.Service;
+using SeuCevApi.Service.Interface;
 using static SeuCevApi.AppSettings;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddTransient<IOfertaRepository, OfertaRepository>();
 builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddTransient<ITipoClienteRepository, TipoClienteRepository>();
 builder.Services.AddTransient<ITipoPlanoRepository, TipoPlanoRepository>();
+
+builder.Services.AddTransient<ITipoPlanoService, TipoPlanoService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
