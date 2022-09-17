@@ -22,6 +22,7 @@ builder.Services.AddTransient<ITipoClienteService, TipoClienteService>();
 builder.Services.AddTransient<IEnderecoService, EnderecoService>();
 builder.Services.AddTransient<IDocumentoService, DocumentoService>();
 builder.Services.AddTransient<IProdutoService, ProdutoService>();
+builder.Services.AddTransient<IOfertaService, OfertaService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
