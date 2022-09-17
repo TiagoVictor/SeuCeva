@@ -19,6 +19,7 @@ builder.Services.AddTransient<ITipoPlanoRepository, TipoPlanoRepository>();
 
 builder.Services.AddTransient<ITipoPlanoService, TipoPlanoService>();
 builder.Services.AddTransient<ITipoClienteService, TipoClienteService>();
+builder.Services.AddTransient<IEnderecoService, EnderecoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
