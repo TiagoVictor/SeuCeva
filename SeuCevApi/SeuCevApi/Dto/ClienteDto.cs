@@ -1,6 +1,4 @@
-﻿using SeuCevApi.Model;
-
-namespace SeuCevApi.Dto
+﻿namespace SeuCevApi.Dto
 {
     public class ClienteDto : BaseDto
     {
@@ -10,6 +8,6 @@ namespace SeuCevApi.Dto
         public string Email { get; set; }
         public DateTime DtNascimento { get; set; }
         public DocumentoDto DocumentoDto { get; set; }
-        public Endereco Endereco { get; set; }
+        public EnderecoDto EnderecoDto { get; set; }
     }
 }
