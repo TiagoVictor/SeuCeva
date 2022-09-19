@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SeuCevApi.Data.Context;
 using SeuCevApi.Data.Repository;
 using SeuCevApi.Data.Repository.Interface;
 using SeuCevApi.Service;
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=localhost;Database=SeuCeva;Username=postgres;Password=Tiago1998@"));
 
 builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<IDocumentoRepository, DocumentoRepository>();
