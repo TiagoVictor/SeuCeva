@@ -27,8 +27,6 @@ namespace SeuCevApi.Data.Context
                 p.Property(x => x.Idade);
                 p.Property(x => x.Email);
                 p.Property(x => x.DtNascimento);
-                p.Property(x => x.Documento);
-                p.Property(x => x.Endereco);
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
 
@@ -89,7 +87,7 @@ namespace SeuCevApi.Data.Context
                 p.Property(x => x.Id);
                 p.Property(x => x.Descricao);
                 p.Property(x => x.Ativo);
-                p.HasKey (x => x.Id);
+                p.HasKey(x => x.Id);
             });
         }
     }
