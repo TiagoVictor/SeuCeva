@@ -37,9 +37,7 @@ namespace SeuCevApi.Controllers
 
         public IQueryable<TipoCliente> GetAll()
         {
-            var list = _service.GetAll();
-
-            return list;
+            return _service.GetAll();
         }
 
         public TipoCliente GetById(int id)
