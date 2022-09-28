@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SeuCevApi.Dto;
+using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 
 namespace SeuCevApi.Controllers
@@ -15,5 +17,34 @@ namespace SeuCevApi.Controllers
             _service = tipoClienteService;
         }
 
+        public async Task<IActionResult> Save(TipoClienteDto dto)
+        {
+            await _service.Save(dto);
+            return NoContent();
+        }
+
+        public async Task<IActionResult> Delete(TipoClienteDto dto)
+        {
+            await _service.Delete(dto);
+            return NoContent();
+        }
+
+        public async Task<IActionResult> Edit(TipoClienteDto dto)
+        {
+            await _service.Edit(dto);
+            return NoContent();
+        }
+
+        public IQueryable<TipoCliente> GetAll()
+        {
+            var list = _service.GetAll();
+
+            return list;
+        }
+
+        public TipoCliente GetById(int id)
+        {
+            return _service.GetById(id);
+        }
     }
 }
