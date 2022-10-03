@@ -16,14 +16,12 @@ namespace SeuCevApi.Service
 
         public async Task Delete(TipoClienteDto tipoCliente)
         {
-            var model = new TipoCliente();
-            await _repository.Delete(model);
+            await _repository.Delete(ConvertToModel(tipoCliente));
         }
 
         public async Task Edit(TipoClienteDto tipoCliente)
         {
-            var model = new TipoCliente();
-            await _repository.Edit(model);
+            await _repository.Edit(ConvertToModel(tipoCliente));
         }
 
         public IQueryable<TipoCliente> GetAll()
@@ -38,8 +36,16 @@ namespace SeuCevApi.Service
 
         public async Task Save(TipoClienteDto tipoCliente)
         {
-            var model = new TipoCliente();
-            await _repository.Save(model);
+            await _repository.Save(ConvertToModel(tipoCliente));
+        }
+
+        private TipoCliente ConvertToModel(TipoClienteDto dto)
+        {
+            return new TipoCliente
+            {
+                Descricao = dto.Descricao,
+                Ativo = true
+            };
         }
     }
 }
