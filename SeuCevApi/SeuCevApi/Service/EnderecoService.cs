@@ -1,4 +1,5 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
+using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 
@@ -13,14 +14,14 @@ namespace SeuCevApi.Service
             _enderecoRepository = enderecoRepository;
         }
 
-        public async Task Delete(Endereco endereco)
+        public async Task Delete(EnderecoDto dto)
         {
-            await _enderecoRepository.Delete(endereco);
+            await _enderecoRepository.Delete(ConvertToModel(dto));
         }
 
-        public async Task Edit(Endereco endereco)
+        public async Task Edit(EnderecoDto dto)
         {
-            await _enderecoRepository.Edit(endereco);
+            await _enderecoRepository.Edit(ConvertToModel(dto));
         }
 
         public IQueryable<Endereco> GetAll()
@@ -33,9 +34,23 @@ namespace SeuCevApi.Service
             return _enderecoRepository.GetById(id);
         }
 
-        public async Task Save(Endereco endereco)
+        public async Task Save(EnderecoDto dto)
         {
-            await _enderecoRepository.Save(endereco);
+            await _enderecoRepository.Save(ConvertToModel(dto));
+        }
+
+        public Endereco ConvertToModel(EnderecoDto dto)
+        {
+            return new Endereco
+            {
+                Id = dto.Id,
+                Pais = dto.Pais,
+                UF = dto.UF,
+                Cidade = dto.Cidade,
+                Rua = dto.Rua,
+                Bairro = dto.Bairro,
+                CEP = dto.CEP
+            };
         }
     }
 }
