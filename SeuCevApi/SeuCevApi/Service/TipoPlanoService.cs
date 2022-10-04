@@ -1,4 +1,5 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
+using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 
@@ -13,14 +14,14 @@ namespace SeuCevApi.Service
             _repository = repository;
         }
 
-        public async Task Delete(TipoPlano tipoPlano)
+        public async Task Delete(TipoPlanoDto dto)
         {
-            await _repository.Delete(tipoPlano);
+            await _repository.Delete(ConvertToModel(dto));
         }
 
-        public async Task Edit(TipoPlano tipoPlano)
+        public async Task Edit(TipoPlanoDto dto)
         {
-            await _repository.Edit(tipoPlano);
+            await _repository.Edit(ConvertToModel(dto));
         }
 
         public IQueryable<TipoPlano> GetAll()
@@ -33,9 +34,18 @@ namespace SeuCevApi.Service
             return _repository.GetById(id);
         }
 
-        public async Task Save(TipoPlano tipoPlano)
+        public async Task Save(TipoPlanoDto dto)
         {
-            await _repository.Save(tipoPlano);
+            await _repository.Save(ConvertToModel(dto));
+        }
+
+        private TipoPlano ConvertToModel(TipoPlanoDto dto)
+        {
+            return new TipoPlano
+            {
+                Id = dto.Id,
+                Descricao = dto.Descricao
+            };
         }
     }
 }
