@@ -1,4 +1,5 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
+using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 
@@ -13,14 +14,14 @@ namespace SeuCevApi.Service
             _clienteRepository = clienteRepository;
         }
 
-        public async Task Delete(Cliente cliente)
+        public async Task Delete(ClienteDto dto)
         {
-            await _clienteRepository.Delete(cliente);
+            await _clienteRepository.Delete(ConvertToModel(dto));
         }
 
-        public async Task Edit(Cliente cliente)
+        public async Task Edit(ClienteDto dto)
         {
-            await _clienteRepository.Edit(cliente);
+            await _clienteRepository.Edit(ConvertToModel(dto));
         }
 
         public IQueryable<Cliente> GetAll()
@@ -33,9 +34,22 @@ namespace SeuCevApi.Service
             return _clienteRepository.GetById(id);
         }
 
-        public async Task Save(Cliente cliente)
+        public async Task Save(ClienteDto dto)
         {
-            await _clienteRepository.Save(cliente);
+            await _clienteRepository.Save(ConvertToModel(dto));
+        }
+
+        private Cliente ConvertToModel(ClienteDto dto)
+        {
+            return new Cliente
+            {
+                Id = dto.Id,
+                Nome = dto.Nome,
+                SobreNome = dto.SobreNome,
+                Email = dto.Email,
+                Idade = dto.Idade,
+                DtNascimento = dto.DtNascimento
+            };
         }
     }
 }
