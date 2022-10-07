@@ -17,27 +17,32 @@ namespace SeuCevApi.Controllers
             _enderecoService = enderecoService;
         }
 
+        [HttpPost("SalvaEndereco")]
         public async Task<IActionResult> Save(EnderecoDto dto)
         {
             return NoContent();
         }
 
+        [HttpPost("EditaEndereco")]
         public async Task<IActionResult> Edit(EnderecoDto dto)
         {
             return NoContent();
         }
 
+        [HttpPost("DeletaEndereco")]
         public async Task<IActionResult> Delete(EnderecoDto dto)
         {
             return NoContent();
         }
 
-        public IQueryable<Endereco> GetAll()
+        [HttpGet("RecuperaTodosEnderecos")]
+        public IEnumerable<Endereco> RecuperaTodos()
         {
             return _enderecoService.GetAll();
         }
 
-        public Endereco GetById(int id)
+        [HttpGet("RecuperaEnderecoPorId")]
+        public Endereco RecuperaPorId(int id)
         {
             return _enderecoService.GetById(id);
         }

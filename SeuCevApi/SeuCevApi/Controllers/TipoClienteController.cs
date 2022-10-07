@@ -17,30 +17,35 @@ namespace SeuCevApi.Controllers
             _service = tipoClienteService;
         }
 
+        [HttpPost("SalvaTipoCliente")]
         public async Task<IActionResult> Save(TipoClienteDto dto)
         {
             await _service.Save(dto);
             return NoContent();
         }
 
+        [HttpPost("DeletaTipoCliente")]
         public async Task<IActionResult> Delete(TipoClienteDto dto)
         {
             await _service.Delete(dto);
             return NoContent();
         }
 
+        [HttpPost("EditaTiposClientes")]
         public async Task<IActionResult> Edit(TipoClienteDto dto)
         {
             await _service.Edit(dto);
             return NoContent();
         }
 
-        public IQueryable<TipoCliente> GetAll()
+        [HttpGet("RecuperaTodosTiposClientes")]
+        public IEnumerable<TipoCliente> RecuperaTodos()
         {
             return _service.GetAll();
         }
 
-        public TipoCliente GetById(int id)
+        [HttpGet("RecuperaTipoClientePorId")]
+        public TipoCliente RecuperaPorId(int id)
         {
             return _service.GetById(id);
         }
