@@ -17,30 +17,35 @@ namespace SeuCevApi.Controllers
             _ofertaService = ofertaService;
         }
 
+        [HttpPost("SalvaOferta")]
         public async Task<IActionResult> Save(OfertaDto dto)
         {
             await _ofertaService.Save(dto);
             return NoContent();
         }
 
+        [HttpPost("EditaOferta")]
         public async Task<IActionResult> Edit(OfertaDto dto)
         {
             await _ofertaService.Edit(dto);
             return NoContent();
         }
 
+        [HttpPost("DeletaOferta")]
         public async Task<IActionResult> Delete(OfertaDto dto)
         {
             await _ofertaService.Delete(dto);
             return NoContent();
         }
 
-        public IQueryable<Oferta> GetAll()
+        [HttpGet("RecuperaTodasOfertas")]
+        public IEnumerable<Oferta> RecuperaTodos()
         {
             return _ofertaService.GetAll();
         }
 
-        public Oferta GetById(int id)
+        [HttpGet("RecuperaOfertaPorId")]
+        public Oferta RecuperaPorId(int id)
         {
             return _ofertaService.GetById(id);
         }

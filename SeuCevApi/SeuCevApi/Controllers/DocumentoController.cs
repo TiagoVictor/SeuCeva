@@ -17,30 +17,36 @@ namespace SeuCevApi.Controllers
             _documentoService = documentoService;
         }
 
+        [HttpPost("SalvaDocumento")]
         public async Task<IActionResult> Save(DocumentoDto dto)
         {
             await _documentoService.Save(dto);
             return NoContent();
         }
 
+        [HttpPost("EditaDocumento")]
         public async Task<IActionResult> Edit(DocumentoDto dto)
         {
             await _documentoService.Edit(dto);
             return NoContent();
         }
 
+        [HttpPost("ExcluiDocumento")]
         public async Task<IActionResult> Delete(DocumentoDto dto)
         {
             await _documentoService.Delete(dto);
             return NoContent();
         }
 
-        public IQueryable<Documento> GetAll()
+        [HttpGet("RecuperaTodosDocumentos")]
+        public IEnumerable<Documento> RecuperaTodos()
         {
             return _documentoService.GetAll();
         }
 
-        public Documento GetById(int id)
+
+        [HttpGet("RecuperaDocumentoPorId")]
+        public Documento RecuperaPorId(int id)
         {
             return _documentoService.GetById(id);
         }

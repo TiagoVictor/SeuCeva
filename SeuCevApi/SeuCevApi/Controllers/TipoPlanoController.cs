@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using System.Collections.Generic;
 
 namespace SeuCevApi.Controllers
 {
@@ -17,30 +18,35 @@ namespace SeuCevApi.Controllers
             _tipoPlanoService = tipoPlanoService;
         }
 
+        [HttpPost("SalvaTipoPlano")]
         public async Task<IActionResult> Save(TipoPlanoDto dto)
         {
             await _tipoPlanoService.Save(dto);
             return NoContent();
         }
 
+        [HttpPost("EditaTipoPlano")]
         public async Task<IActionResult> Edit(TipoPlanoDto dto)
         {
             await _tipoPlanoService.Edit(dto);
             return NoContent();
         }
 
+        [HttpPost("DeletaTipoPlano")]
         public async Task<IActionResult> Delete(TipoPlanoDto dto)
         {
             await _tipoPlanoService.Delete(dto);
             return NoContent();
         }
 
-        public IQueryable<TipoPlano> GetAll()
+        [HttpGet("RecuperaTodosTipoPlano")]
+        public IEnumerable<TipoPlano> RecuperaTodos()
         {
             return _tipoPlanoService.GetAll();
         }
 
-        public TipoPlano GetById(int id)
+        [HttpGet("RecuperaTipoPlanoPorId")]
+        public TipoPlano RecuperaPorId(int id)
         {
             return _tipoPlanoService.GetById(id);
         }
