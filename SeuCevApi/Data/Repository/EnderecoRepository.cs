@@ -37,6 +37,7 @@ namespace SeuCevApi.Data.Repository
 
         public async Task Save(Endereco endereco)
         {
+            endereco.RegistrationDate = DateTime.UtcNow;
             await _applicationDbContext.Enderecos.AddAsync(endereco);
             await _applicationDbContext.SaveChangesAsync();
         }
