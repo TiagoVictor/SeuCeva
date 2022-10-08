@@ -37,6 +37,7 @@ namespace SeuCevApi.Data.Repository
 
         public async Task Save(TipoPlano tipoPlano)
         {
+            tipoPlano.RegistrationDate = DateTime.UtcNow;
             await _applicationDbContext.TiposPlanos.AddAsync(tipoPlano);
             await _applicationDbContext.SaveChangesAsync();
         }

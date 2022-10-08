@@ -44,7 +44,8 @@ namespace SeuCevApi.Service
             return new TipoPlano
             {
                 Id = dto.Id,
-                Descricao = dto.Descricao
+                Descricao = dto.Descricao,
+                Ativo = dto.Ativo
             };
         }
     }

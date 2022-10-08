@@ -47,7 +47,8 @@ namespace SeuCevApi.Service
                 Titulo = dto.Titulo,
                 Descricao = dto.Descricao,
                 Quantidade = dto.Quantidade,
-                Alcance = dto.Alcance
+                Alcance = dto.Alcance,
+                Ativo = dto.Ativo
             };
         }
     }
