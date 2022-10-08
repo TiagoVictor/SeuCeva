@@ -48,7 +48,8 @@ namespace SeuCevApi.Service
                 SobreNome = dto.SobreNome,
                 Email = dto.Email,
                 Idade = dto.Idade,
-                DtNascimento = dto.DtNascimento
+                DtNascimento = dto.DtNascimento,
+                Ativo = dto.Ativo
             };
         }
     }

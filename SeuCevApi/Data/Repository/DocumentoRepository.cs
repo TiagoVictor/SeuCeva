@@ -37,15 +37,9 @@ namespace SeuCevApi.Data.Repository
 
         public async Task Save(Documento documento)
         {
-            try
-            {
-                await _applicationDbContext.Documentos.AddAsync(documento);
-                await _applicationDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-            }
+            documento.RegistrationDate = DateTime.UtcNow;
+            await _applicationDbContext.Documentos.AddAsync(documento);
+            await _applicationDbContext.SaveChangesAsync();
         }
     }
 }
