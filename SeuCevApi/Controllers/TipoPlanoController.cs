@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
-using System.Collections.Generic;
 
 namespace SeuCevApi.Controllers
 {
