@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
 //builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=seucevabd.postgres.database.azure.com;Database=SeuCeva;Username=SeuCevaAdm;Password=CevaAdm@2022"));
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=localhost;Database=SeuCeva;Username=postgres;Password=Tiago1998@"));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("SeuCeva")));
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
