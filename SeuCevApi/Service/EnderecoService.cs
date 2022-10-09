@@ -49,7 +49,8 @@ namespace SeuCevApi.Service
                 Cidade = dto.Cidade,
                 Rua = dto.Rua,
                 Bairro = dto.Bairro,
-                CEP = dto.CEP
+                CEP = dto.CEP,
+                Ativo = dto.Ativo
             };
         }
     }

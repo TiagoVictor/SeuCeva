@@ -45,7 +45,8 @@ namespace SeuCevApi.Service
             {
                 Id = dto.Id,
                 Tipo = dto.Tipo,
-                Numero = dto.Numero
+                Numero = dto.Numero,
+                Ativo = dto.Ativo
             };
         }
     }

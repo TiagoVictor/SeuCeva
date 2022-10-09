@@ -46,7 +46,7 @@ namespace SeuCevApi.Service
                 Id = dto.Id,
                 Nome = dto.Nome,
                 Descricao = dto.Descricao,
-                Ativo = true
+                Ativo = dto.Ativo
             };
         }
     }

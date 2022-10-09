@@ -44,7 +44,7 @@ namespace SeuCevApi.Service
             return new TipoCliente
             {
                 Descricao = dto.Descricao,
-                Ativo = true
+                Ativo = dto.Ativo
             };
         }
     }
