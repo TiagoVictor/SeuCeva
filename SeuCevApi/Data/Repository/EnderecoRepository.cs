@@ -25,7 +25,7 @@ namespace SeuCevApi.Data.Repository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public IQueryable<Endereco> GetAll()
+        public IEnumerable<Endereco> GetAll()
         {
             return _applicationDbContext.Enderecos.Where(x => x.Ativo);
         }

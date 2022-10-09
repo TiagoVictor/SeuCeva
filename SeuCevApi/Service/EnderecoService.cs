@@ -24,7 +24,7 @@ namespace SeuCevApi.Service
             await _enderecoRepository.Edit(ConvertToModel(dto));
         }
 
-        public IQueryable<Endereco> GetAll()
+        public IEnumerable<Endereco> GetAll()
         {
             return _enderecoRepository.GetAll();
         }

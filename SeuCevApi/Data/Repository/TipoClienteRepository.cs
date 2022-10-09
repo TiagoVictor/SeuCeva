@@ -25,7 +25,7 @@ namespace SeuCevApi.Data.Repository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public IQueryable<TipoCliente> GetAll()
+        public IEnumerable<TipoCliente> GetAll()
         {
             return _applicationDbContext.TiposClientes.Where(x => x.Ativo);
         }

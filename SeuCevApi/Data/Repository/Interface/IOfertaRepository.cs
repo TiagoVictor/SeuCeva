@@ -8,7 +8,7 @@ namespace SeuCevApi.Data.Repository.Interface
         public Task Save(Oferta oferta);
         public Task Delete(Oferta oferta);
         public Task Edit(Oferta oferta);
-        public IQueryable<Oferta> GetAll();
+        public IEnumerable<Oferta> GetAll();
         public Oferta GetById(int id);
     }
 }

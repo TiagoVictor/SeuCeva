@@ -22,72 +22,85 @@ namespace SeuCevApi.Data.Context
             modelBuilder.Entity<Cliente>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Nome);
-                p.Property(x => x.SobreNome);
-                p.Property(x => x.Idade);
-                p.Property(x => x.Email);
+                p.Property(x => x.Nome).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.SobreNome).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.Idade).HasColumnType("VARCHAR(8)").IsRequired();
+                p.Property(x => x.Email).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.DtNascimento);
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
 
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_cliente_id");
             });
 
             modelBuilder.Entity<Documento>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Tipo);
-                p.Property(x => x.Numero);
+                p.Property(x => x.Tipo).HasColumnType("VARCHAR(55)").IsRequired();
+                p.Property(x => x.Numero).HasColumnType("VARCHAR(55)").IsRequired();
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
+
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_documento_id");
             });
 
             modelBuilder.Entity<Endereco>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Pais);
-                p.Property(x => x.UF);
-                p.Property(x => x.Cidade);
-                p.Property(x => x.Bairro);
-                p.Property(x => x.Rua);
-                p.Property(x => x.CEP);
+                p.Property(x => x.Pais).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.UF).HasColumnType("VARCHAR(4)").IsRequired();
+                p.Property(x => x.Cidade).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.Bairro).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.Rua).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.CEP).HasColumnType("VARCHAR(8)").IsRequired();
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
+
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_endereco_id");
             });
 
             modelBuilder.Entity<Oferta>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Titulo);
-                p.Property(x => x.Descricao);
+                p.Property(x => x.Titulo).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.Descricao).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.Quantidade);
                 p.Property(x => x.Alcance);
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
+
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_oferta_id");
             });
 
             modelBuilder.Entity<Produto>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Descricao);
-                p.Property(x => x.Nome);
+                p.Property(x => x.Descricao).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.Nome).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
+
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_produto_id");
             });
 
             modelBuilder.Entity<TipoCliente>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Descricao);
+                p.Property(x => x.Descricao).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
+
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_tipocliente_id");
             });
 
             modelBuilder.Entity<TipoPlano>(p =>
             {
                 p.Property(x => x.Id);
-                p.Property(x => x.Descricao);
+                p.Property(x => x.Descricao).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);
+
+                p.HasIndex(x => x.Id).HasDatabaseName("idx_tipoplano_id");
             });
         }
     }

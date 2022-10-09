@@ -24,7 +24,7 @@ namespace SeuCevApi.Service
             await _produtoRepository.Edit(ConvertToModel(produto));
         }
 
-        public IQueryable<Produto> GetAll()
+        public IEnumerable<Produto> GetAll()
         {
             return _produtoRepository.GetAll();
         }

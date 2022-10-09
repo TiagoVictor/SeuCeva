@@ -24,7 +24,7 @@ namespace SeuCevApi.Service
             await _repository.Edit(ConvertToModel(dto));
         }
 
-        public IQueryable<TipoPlano> GetAll()
+        public IEnumerable<TipoPlano> GetAll()
         {
             return _repository.GetAll();
         }

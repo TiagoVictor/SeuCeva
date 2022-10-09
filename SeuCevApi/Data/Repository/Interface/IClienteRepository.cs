@@ -7,7 +7,7 @@ namespace SeuCevApi.Data.Repository.Interface
         public Task Save(Cliente cliente);
         public Task Delete(Cliente cliente);
         public Task Edit(Cliente cliente);
-        public IQueryable<Cliente> GetAll();
+        public IEnumerable<Cliente> GetAll();
         public Cliente GetById(int id);
     }
 }
