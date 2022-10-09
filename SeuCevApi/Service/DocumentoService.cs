@@ -24,7 +24,7 @@ namespace SeuCevApi.Service
             await _documentoRepository.Edit(ConvertToModel(dto));
         }
 
-        public IQueryable<Documento> GetAll()
+        public IEnumerable<Documento> GetAll()
         {
             return _documentoRepository.GetAll();
         }

@@ -25,7 +25,7 @@ namespace SeuCevApi.Data.Repository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public IQueryable<Documento> GetAll()
+        public IEnumerable<Documento> GetAll()
         {
             return _applicationDbContext.Documentos.Where(x => x.Ativo);
         }

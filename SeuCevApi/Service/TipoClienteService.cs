@@ -24,7 +24,7 @@ namespace SeuCevApi.Service
             await _repository.Edit(ConvertToModel(tipoCliente));
         }
 
-        public IQueryable<TipoCliente> GetAll()
+        public IEnumerable<TipoCliente> GetAll()
         {
             return _repository.GetAll();
         }

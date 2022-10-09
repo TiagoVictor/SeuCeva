@@ -8,7 +8,7 @@ namespace SeuCevApi.Service.Interface
         public Task Save(EnderecoDto dto);
         public Task Delete(EnderecoDto dto);
         public Task Edit(EnderecoDto dto);
-        public IQueryable<Endereco> GetAll();
+        public IEnumerable<Endereco> GetAll();
         public Endereco GetById(int id);
     }
 }

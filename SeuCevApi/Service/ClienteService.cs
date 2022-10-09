@@ -8,10 +8,14 @@ namespace SeuCevApi.Service
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository _clienteRepository;
+        private readonly IDocumentoService _documentoService;
+        private readonly IEnderecoService _enderecoServiece;
 
-        public ClienteService(IClienteRepository clienteRepository)
+        public ClienteService(IClienteRepository clienteRepository, IEnderecoService enderecoServiece, IDocumentoService documentoService)
         {
             _clienteRepository = clienteRepository;
+            _enderecoServiece = enderecoServiece;
+            _documentoService = documentoService;
         }
 
         public async Task Delete(ClienteDto dto)
@@ -24,9 +28,10 @@ namespace SeuCevApi.Service
             await _clienteRepository.Edit(ConvertToModel(dto));
         }
 
-        public IQueryable<Cliente> GetAll()
+        public IEnumerable<Cliente> GetAll()
         {
             return _clienteRepository.GetAll();
+            
         }
 
         public Cliente GetById(int id)
@@ -49,7 +54,23 @@ namespace SeuCevApi.Service
                 Email = dto.Email,
                 Idade = dto.Idade,
                 DtNascimento = dto.DtNascimento,
-                Ativo = dto.Ativo
+                Ativo = dto.Ativo,
+                Enderecos = {new Endereco
+                {
+                    Pais = dto.EnderecoDto.Pais,
+                    UF = dto.EnderecoDto.UF,
+                    Cidade = dto.EnderecoDto.Cidade,
+                    Rua = dto.EnderecoDto.Rua,
+                    Bairro = dto.EnderecoDto.Bairro,
+                    CEP = dto.EnderecoDto.CEP,
+                    Ativo = dto.EnderecoDto.Ativo
+                } },
+                Documentos = {new Documento
+                {
+                    Tipo = dto.DocumentoDto.Tipo,
+                    Numero = dto.DocumentoDto.Numero,
+                    Ativo = dto .DocumentoDto.Ativo
+                } }
             };
         }
     }

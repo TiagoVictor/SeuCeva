@@ -24,7 +24,7 @@ namespace SeuCevApi.Service
             await _ofertaRepository.Edit(ConvertToModel(dto));
         }
 
-        public IQueryable<Oferta> GetAll()
+        public IEnumerable<Oferta> GetAll()
         {
             return _ofertaRepository.GetAll();
         }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SeuCevApi.Data.Context;
@@ -11,9 +12,10 @@ using SeuCevApi.Data.Context;
 namespace SeuCevApi.AppMigracao
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221009034850_AjustesBanco")]
+    partial class AjustesBanco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,6 +34,9 @@ namespace SeuCevApi.AppMigracao
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
+
+                    b.Property<long>("DocumentoId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DtNascimento")
                         .HasColumnType("timestamp with time zone");
@@ -57,6 +62,8 @@ namespace SeuCevApi.AppMigracao
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DocumentoId");
+
                     b.HasIndex("Id")
                         .HasDatabaseName("idx_cliente_id");
 
@@ -74,9 +81,6 @@ namespace SeuCevApi.AppMigracao
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
 
-                    b.Property<long>("IdCliente")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Numero")
                         .IsRequired()
                         .HasColumnType("VARCHAR(55)");
@@ -92,8 +96,6 @@ namespace SeuCevApi.AppMigracao
 
                     b.HasIndex("Id")
                         .HasDatabaseName("idx_documento_id");
-
-                    b.HasIndex("IdCliente");
 
                     b.ToTable("Documentos");
                 });
@@ -121,9 +123,6 @@ namespace SeuCevApi.AppMigracao
                         .IsRequired()
                         .HasColumnType("VARCHAR(255)");
 
-                    b.Property<long>("IdCliente")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Pais")
                         .IsRequired()
                         .HasColumnType("VARCHAR(255)");
@@ -143,8 +142,6 @@ namespace SeuCevApi.AppMigracao
 
                     b.HasIndex("Id")
                         .HasDatabaseName("idx_endereco_id");
-
-                    b.HasIndex("IdCliente");
 
                     b.ToTable("Enderecos");
                 });
@@ -267,33 +264,15 @@ namespace SeuCevApi.AppMigracao
                     b.ToTable("TiposPlanos");
                 });
 
-            modelBuilder.Entity("SeuCevApi.Model.Documento", b =>
-                {
-                    b.HasOne("SeuCevApi.Model.Cliente", "Cliente")
-                        .WithMany("Documentos")
-                        .HasForeignKey("IdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-                });
-
-            modelBuilder.Entity("SeuCevApi.Model.Endereco", b =>
-                {
-                    b.HasOne("SeuCevApi.Model.Cliente", "Cliente")
-                        .WithMany("Enderecos")
-                        .HasForeignKey("IdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-                });
-
             modelBuilder.Entity("SeuCevApi.Model.Cliente", b =>
                 {
-                    b.Navigation("Documentos");
+                    b.HasOne("SeuCevApi.Model.Documento", "Documento")
+                        .WithMany()
+                        .HasForeignKey("DocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Enderecos");
+                    b.Navigation("Documento");
                 });
 #pragma warning restore 612, 618
         }

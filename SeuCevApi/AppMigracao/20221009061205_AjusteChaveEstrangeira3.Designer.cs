@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SeuCevApi.Data.Context;
@@ -11,9 +12,10 @@ using SeuCevApi.Data.Context;
 namespace SeuCevApi.AppMigracao
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221009061205_AjusteChaveEstrangeira3")]
+    partial class AjusteChaveEstrangeira3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,6 +76,9 @@ namespace SeuCevApi.AppMigracao
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
 
+                    b.Property<long>("ClienteId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("IdCliente")
                         .HasColumnType("bigint");
 
@@ -90,10 +95,10 @@ namespace SeuCevApi.AppMigracao
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteId");
+
                     b.HasIndex("Id")
                         .HasDatabaseName("idx_documento_id");
-
-                    b.HasIndex("IdCliente");
 
                     b.ToTable("Documentos");
                 });
@@ -121,6 +126,9 @@ namespace SeuCevApi.AppMigracao
                         .IsRequired()
                         .HasColumnType("VARCHAR(255)");
 
+                    b.Property<long>("ClienteId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("IdCliente")
                         .HasColumnType("bigint");
 
@@ -141,10 +149,10 @@ namespace SeuCevApi.AppMigracao
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteId");
+
                     b.HasIndex("Id")
                         .HasDatabaseName("idx_endereco_id");
-
-                    b.HasIndex("IdCliente");
 
                     b.ToTable("Enderecos");
                 });
@@ -271,7 +279,7 @@ namespace SeuCevApi.AppMigracao
                 {
                     b.HasOne("SeuCevApi.Model.Cliente", "Cliente")
                         .WithMany("Documentos")
-                        .HasForeignKey("IdCliente")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -281,8 +289,8 @@ namespace SeuCevApi.AppMigracao
             modelBuilder.Entity("SeuCevApi.Model.Endereco", b =>
                 {
                     b.HasOne("SeuCevApi.Model.Cliente", "Cliente")
-                        .WithMany("Enderecos")
-                        .HasForeignKey("IdCliente")
+                        .WithMany("EnderecoS")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -293,7 +301,7 @@ namespace SeuCevApi.AppMigracao
                 {
                     b.Navigation("Documentos");
 
-                    b.Navigation("Enderecos");
+                    b.Navigation("EnderecoS");
                 });
 #pragma warning restore 612, 618
         }

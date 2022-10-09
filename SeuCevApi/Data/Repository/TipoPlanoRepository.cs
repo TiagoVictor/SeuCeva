@@ -25,7 +25,7 @@ namespace SeuCevApi.Data.Repository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public IQueryable<TipoPlano> GetAll()
+        public IEnumerable<TipoPlano> GetAll()
         {
             return _applicationDbContext.TiposPlanos.Where(x => x.Ativo);
         }

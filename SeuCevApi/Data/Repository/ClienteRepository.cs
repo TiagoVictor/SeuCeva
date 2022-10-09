@@ -26,9 +26,12 @@ namespace SeuCevApi.Data.Repository
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public IQueryable<Cliente> GetAll()
+        public IEnumerable<Cliente> GetAll()
         {
-            return _applicationDbContext.Clientes.Where(x => x.Ativo);
+            return _applicationDbContext.Clientes
+                .Where(x => x.Ativo)
+                .Include(x => x.Documentos)
+                .Include(x => x.Enderecos);
         }
 
         public Cliente GetById(int id)
