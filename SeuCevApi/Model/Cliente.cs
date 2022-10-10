@@ -5,6 +5,12 @@ namespace SeuCevApi.Model
 {
     public class Cliente : Base
     {
+        public Cliente()
+        {
+            Documentos = new HashSet<Documento>();
+            Enderecos = new HashSet<Endereco>();
+        }
+
         public string Nome { get; set; }
         public string SobreNome { get; set; }
         public string Idade { get; set; }
