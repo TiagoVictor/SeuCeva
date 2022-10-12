@@ -45,31 +45,32 @@ namespace SeuCevApi.Service
 
         private Cliente ConvertToModel(ClienteDto dto)
         {
-            var teste = new Cliente();
-            teste.Id = dto.Id;
-            teste.Nome = dto.Nome;
-            teste.SobreNome = dto.SobreNome;
-            teste.Email = dto.Email;
-            teste.Idade = dto.Idade;
-            teste.DtNascimento = dto.DtNascimento;
-            teste.Ativo = dto.Ativo;
-            teste.Enderecos.Add(new Endereco
+            return new Cliente
             {
-                Pais = dto.EnderecoDto.Pais,
-                UF = dto.EnderecoDto.UF,
-                Cidade = dto.EnderecoDto.Cidade,
-                Rua = dto.EnderecoDto.Rua,
-                Bairro = dto.EnderecoDto.Bairro,
-                CEP = dto.EnderecoDto.CEP,
-                Ativo = dto.EnderecoDto.Ativo
-            });
-            teste.Documentos.Add(new Documento
-            {
-                Tipo = dto.DocumentoDto.Tipo,
-                Numero = dto.DocumentoDto.Numero,
-                Ativo = dto.DocumentoDto.Ativo
-            });
-            return teste;
+                Id = dto.Id,
+                Nome = dto.Nome,
+                SobreNome = dto.SobreNome,
+                Email = dto.Email,
+                Idade = dto.Idade,
+                DtNascimento = dto.DtNascimento,
+                Ativo = dto.Ativo,
+                Enderecos = {new Endereco
+                {
+                    Pais = dto.EnderecoDto.Pais,
+                    UF = dto.EnderecoDto.UF,
+                    Cidade = dto.EnderecoDto.Cidade,
+                    Rua = dto.EnderecoDto.Rua,
+                    Bairro = dto.EnderecoDto.Bairro,
+                    CEP = dto.EnderecoDto.CEP,
+                    Ativo = dto.EnderecoDto.Ativo
+                } },
+                Documentos = {new Documento
+                {
+                    Tipo = dto.DocumentoDto.Tipo,
+                    Numero = dto.DocumentoDto.Numero,
+                    Ativo = dto .DocumentoDto.Ativo
+                } }
+            };
         }
     }
 }

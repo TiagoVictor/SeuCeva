@@ -13,12 +13,11 @@ namespace SeuCevApi.Service
         {
             _emailSettings = emailsettings.Value;
         }
-        public Task SendEmailAsync(string email, string subject, string message)
+        public async Task SendEmailAsync(string email, string subject, string message)
         {
             try
             {
-                Execute(email, subject, message).Wait();
-                return Task.FromResult(0);
+                await Execute(email, subject, message);
             }
             catch (Exception)
             {
