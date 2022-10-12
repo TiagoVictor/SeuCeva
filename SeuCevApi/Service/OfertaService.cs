@@ -9,7 +9,7 @@ namespace SeuCevApi.Service
     {
         private readonly IOfertaRepository _ofertaRepository;
 
-        public OfertaService(IOfertaRepository ofertaRepository)
+        public OfertaService(IOfertaRepository ofertaRepository, IEmailService emailService)
         {
             _ofertaRepository = ofertaRepository;
         }
