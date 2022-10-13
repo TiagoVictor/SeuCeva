@@ -14,24 +14,24 @@ namespace SeuCevApi.Service
             _repository = tipoClienteRepository;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _repository.Delete(model);
+            await _repository.DeleteAsync(model);
         }
 
-        public async Task Edit(ClientTypeUpdate tipoCliente, int id)
+        public async Task EditAsync(ClientTypeUpdate tipoCliente, int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _repository.Edit(ConvertToModelUpdate(tipoCliente, model));
+            await _repository.EditAsync(ConvertToModelUpdate(tipoCliente, model));
         }
 
         public IEnumerable<TipoCliente> GetAll()
@@ -44,9 +44,9 @@ namespace SeuCevApi.Service
             return _repository.GetById(id);
         }
 
-        public async Task Save(ClientTypeCreationDto tipoCliente)
+        public async Task SaveAsync(ClientTypeCreationDto tipoCliente)
         {
-            await _repository.Save(ConvertToModel(tipoCliente));
+            await _repository.SaveAsync(ConvertToModel(tipoCliente));
         }
 
         private TipoCliente ConvertToModel(ClientTypeCreationDto dto)

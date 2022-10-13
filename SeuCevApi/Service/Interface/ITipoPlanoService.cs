@@ -5,9 +5,9 @@ namespace SeuCevApi.Service.Interface
 {
     public interface ITipoPlanoService
     {
-        public Task Save(PlanTypeCreationDto dto);
-        public Task Delete(int id);
-        public Task Edit(PlanTypeUpdateDto dto, int id);
+        public Task SaveAsync(PlanTypeCreationDto dto);
+        public Task DeleteAsync(int id);
+        public Task EditAsync(PlanTypeUpdateDto dto, int id);
         public IEnumerable<TipoPlano> GetAll();
         public TipoPlano GetById(int id);
     }

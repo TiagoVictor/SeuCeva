@@ -14,24 +14,24 @@ namespace SeuCevApi.Service
             _repository = repository;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _repository.Delete(model);
+            await _repository.DeleteAsync(model);
         }
 
-        public async Task Edit(PlanTypeUpdateDto dto, int id)
+        public async Task EditAsync(PlanTypeUpdateDto dto, int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _repository.Edit(ConvertToModelUpdate(dto, model));
+            await _repository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<TipoPlano> GetAll()
@@ -44,9 +44,9 @@ namespace SeuCevApi.Service
             return _repository.GetById(id);
         }
 
-        public async Task Save(PlanTypeCreationDto dto)
+        public async Task SaveAsync(PlanTypeCreationDto dto)
         {
-            await _repository.Save(ConvertToModelSave(dto));
+            await _repository.SaveAsync(ConvertToModelSave(dto));
         }
 
         private TipoPlano ConvertToModelSave(PlanTypeCreationDto dto)

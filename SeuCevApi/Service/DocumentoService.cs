@@ -14,24 +14,24 @@ namespace SeuCevApi.Service
             _documentoRepository = documentoRepository;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _documentoRepository.Delete(model);
+            await _documentoRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(DocumentUpdateDto dto, int id)
+        public async Task EditAsync(DocumentUpdateDto dto, int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado");
 
-            await _documentoRepository.Edit(ConvertToModelUpdate(dto, model));
+            await _documentoRepository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Documento> GetAll()
@@ -44,9 +44,9 @@ namespace SeuCevApi.Service
             return _documentoRepository.GetById(id);
         }
 
-        public async Task Save(DocumentCreationDto dto)
+        public async Task SaveAsync(DocumentCreationDto dto)
         {
-            await _documentoRepository.Save(ConvertToModelCreation(dto));
+            await _documentoRepository.SaveAsync(ConvertToModelCreation(dto));
         }
 
         private Documento ConvertToModelCreation(DocumentCreationDto dto)

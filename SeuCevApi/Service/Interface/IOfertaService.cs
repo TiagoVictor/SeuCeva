@@ -5,9 +5,9 @@ namespace SeuCevApi.Service.Interface
 {
     public interface IOfertaService
     {
-        public Task Save(OfferCreationDto dto);
-        public Task Delete(int id);
-        public Task Edit(OfferUpdateDto dto, int id);
+        public Task SaveAsync(OfferCreationDto dto);
+        public Task DeleteAsync(int id);
+        public Task EditAsync(OfferUpdateDto dto, int id);
         public IEnumerable<Oferta> GetAll();
         public Oferta GetById(int id);
     }

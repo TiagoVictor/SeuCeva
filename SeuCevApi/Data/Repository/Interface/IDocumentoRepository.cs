@@ -4,9 +4,9 @@ namespace SeuCevApi.Data.Repository.Interface
 {
     public interface IDocumentoRepository
     {
-        public Task Save(Documento documento);
-        public Task Delete(Documento documento);
-        public Task Edit(Documento documento);
+        public Task SaveAsync(Documento documento);
+        public Task DeleteAsync(Documento documento);
+        public Task EditAsync(Documento documento);
         public IEnumerable<Documento> GetAll();
         public Documento GetById(int id);
     }

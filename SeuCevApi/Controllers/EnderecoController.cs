@@ -24,7 +24,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _enderecoService.Save(dto);
+            await _enderecoService.SaveAsync(dto);
             return Created($"v1/addres/{dto.Rua}", dto);
         }
 
@@ -37,7 +37,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid || id == 0)
                 return BadRequest();
 
-            await _enderecoService.Edit(dto, id);
+            await _enderecoService.EditAsync(dto, id);
             return NoContent();
         }
 
@@ -49,7 +49,7 @@ namespace SeuCevApi.Controllers
             if (id == 0)
                 return BadRequest();
 
-            await _enderecoService.Delete(id);
+            await _enderecoService.DeleteAsync(id);
             return Ok();
         }
 

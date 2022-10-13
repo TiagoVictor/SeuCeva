@@ -24,12 +24,12 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _documentoService.Save(dto);
+            await _documentoService.SaveAsync(dto);
             return Created($"v1/document/{dto.Tipo}", dto);
         }
 
         [HttpPut("Document/{id}")]
-        public async Task<IActionResult> Edit(
+        public async Task<IActionResult> EditAsync(
            [FromBody] DocumentUpdateDto dto,
            [FromRoute] int id,
            [FromServices] IDocumentoService _documentoService)
@@ -37,19 +37,19 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid || id == 0)
                 return BadRequest();
 
-            await _documentoService.Edit(dto, id);
+            await _documentoService.EditAsync(dto, id);
             return Ok();
         }
 
         [HttpDelete("Document/{id}")]
-        public async Task<IActionResult> Delete(
+        public async Task<IActionResult> DeleteAsync(
             [FromRoute] int id,
             [FromServices] IDocumentoService _documentoService)
         {
             if (id == 0)
                 return BadRequest();
 
-            await _documentoService.Delete(id);
+            await _documentoService.DeleteAsync(id);
             return Ok();
         }
 

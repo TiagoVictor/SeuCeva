@@ -13,13 +13,13 @@ namespace SeuCevApi.Data.Repository
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task Delete(Endereco endereco)
+        public async Task DeleteAsync(Endereco endereco)
         {
             _applicationDbContext.Enderecos.Remove(endereco);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task Edit(Endereco endereco)
+        public async Task EditAsync(Endereco endereco)
         {
             _applicationDbContext.Enderecos.Update(endereco);
             await _applicationDbContext.SaveChangesAsync();
@@ -35,7 +35,7 @@ namespace SeuCevApi.Data.Repository
             return _applicationDbContext.Enderecos.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public async Task Save(Endereco endereco)
+        public async Task SaveAsync(Endereco endereco)
         {
             await _applicationDbContext.Enderecos.AddAsync(endereco);
             await _applicationDbContext.SaveChangesAsync();

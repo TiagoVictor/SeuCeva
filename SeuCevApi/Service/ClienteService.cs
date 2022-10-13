@@ -16,24 +16,24 @@ namespace SeuCevApi.Service
             _emailServiece = emailService;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _clienteRepository.Delete(model);
+            await _clienteRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(ClientUpdateDto dto, int id)
+        public async Task EditAsync(ClientUpdateDto dto, int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado");
 
-            await _clienteRepository.Edit(ConvertToModelUpdate(dto, model));
+            await _clienteRepository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Cliente> GetAll()
@@ -47,9 +47,9 @@ namespace SeuCevApi.Service
             return _clienteRepository.GetById(id);
         }
 
-        public async Task Save(ClientCreationDto dto)
+        public async Task SaveAsync(ClientCreationDto dto)
         {
-            await _clienteRepository.Save(ConvertToModelCreation(dto));
+            await _clienteRepository.SaveAsync(ConvertToModelCreation(dto));
             await _emailServiece.SendEmailAsync(dto.Email, "Criação", $"Ola, {dto.Nome} obrigado por cadastrar no SeuCeva!");
         }
 

@@ -4,9 +4,9 @@ namespace SeuCevApi.Data.Repository.Interface
 {
     public interface IProdutoRepository
     {
-        public Task Save(Produto produto);
-        public Task Delete(Produto produto);
-        public Task Edit(Produto produto);
+        public Task SaveAsync(Produto produto);
+        public Task DeleteAsync(Produto produto);
+        public Task EditAsync(Produto produto);
         public IEnumerable<Produto> GetAll();
         public Produto GetById(int id);
     }

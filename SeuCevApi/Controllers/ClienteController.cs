@@ -24,7 +24,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _clienteService.Save(dto);
+            await _clienteService.SaveAsync(dto);
             return Created($"v1/client/{dto.Nome}", dto);
         }
 
@@ -37,7 +37,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid || id == 0)
                 return BadRequest();
 
-            await _clienteService.Edit(dto, id);
+            await _clienteService.EditAsync(dto, id);
             return NoContent();
         }
 
@@ -46,7 +46,7 @@ namespace SeuCevApi.Controllers
             [FromRoute] int id,
             [FromServices] IClienteService _clienteService)
         {
-            await _clienteService.Delete(id);
+            await _clienteService.DeleteAsync(id);
             return NoContent();
         }
 

@@ -24,12 +24,12 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _tipoPlanoService.Save(dto);
+            await _tipoPlanoService.SaveAsync(dto);
             return Created($"v1/PlanType/{dto.Descricao}", dto);
         }
 
         [HttpPut("PlanType/{id}")]
-        public async Task<IActionResult> PutAsync(
+        public async Task<IActionResult> EditAsync(
             [FromBody] PlanTypeUpdateDto dto,
             [FromServices] ITipoPlanoService _tipoPlanoService,
             [FromRoute] int id)
@@ -37,7 +37,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid || id == 0)
                 return BadRequest();
 
-            await _tipoPlanoService.Edit(dto, id);
+            await _tipoPlanoService.EditAsync(dto, id);
             return Ok();
         }
 
@@ -49,7 +49,7 @@ namespace SeuCevApi.Controllers
             if (id == 0)
                 return BadRequest();
 
-            await _tipoPlanoService.Delete(id);
+            await _tipoPlanoService.DeleteAsync(id);
             return NoContent();
         }
 

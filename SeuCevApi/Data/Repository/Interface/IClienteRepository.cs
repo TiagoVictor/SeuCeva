@@ -4,9 +4,9 @@ namespace SeuCevApi.Data.Repository.Interface
 {
     public interface IClienteRepository
     {
-        public Task Save(Cliente cliente);
-        public Task Delete(Cliente cliente);
-        public Task Edit(Cliente cliente);
+        public Task SaveAsync(Cliente cliente);
+        public Task DeleteAsync(Cliente cliente);
+        public Task EditAsync(Cliente cliente);
         public IEnumerable<Cliente> GetAll();
         public Cliente GetById(int id);
     }

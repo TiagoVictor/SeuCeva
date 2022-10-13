@@ -14,24 +14,24 @@ namespace SeuCevApi.Service
             _enderecoRepository = enderecoRepository;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _enderecoRepository.Delete(model);
+            await _enderecoRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(AddresUpdateDto dto, int id)
+        public async Task EditAsync(AddresUpdateDto dto, int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _enderecoRepository.Edit(ConvertToModelUpdate(dto, model));
+            await _enderecoRepository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Endereco> GetAll()
@@ -44,9 +44,9 @@ namespace SeuCevApi.Service
             return _enderecoRepository.GetById(id);
         }
 
-        public async Task Save(AddresCreationDto dto)
+        public async Task SaveAsync(AddresCreationDto dto)
         {
-            await _enderecoRepository.Save(ConvertToModelCreation(dto));
+            await _enderecoRepository.SaveAsync(ConvertToModelCreation(dto));
         }
 
         private Endereco ConvertToModelCreation(AddresCreationDto dto)

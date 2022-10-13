@@ -5,9 +5,9 @@ namespace SeuCevApi.Service.Interface
 {
     public interface IDocumentoService
     {
-        public Task Save(DocumentCreationDto dto);
-        public Task Delete(int id);
-        public Task Edit(DocumentUpdateDto dto, int id);
+        public Task SaveAsync(DocumentCreationDto dto);
+        public Task DeleteAsync(int id);
+        public Task EditAsync(DocumentUpdateDto dto, int id);
         public IEnumerable<Documento> GetAll();
         public Documento GetById(int id);
     }

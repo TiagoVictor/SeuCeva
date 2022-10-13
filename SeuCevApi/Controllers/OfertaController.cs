@@ -24,12 +24,12 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _ofertaService.Save(dto);
+            await _ofertaService.SaveAsync(dto);
             return Created($"v1/offer/{dto.Titulo}", dto);
         }
 
         [HttpPut("Offer/{id}")]
-        public async Task<IActionResult> Edit(
+        public async Task<IActionResult> EditAsync(
             [FromBody] OfferUpdateDto dto,
             [FromRoute] int id,
             [FromServices] IOfertaService _ofertaService)
@@ -37,19 +37,19 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid || id == 0)
                 return BadRequest();
 
-            await _ofertaService.Edit(dto, id);
+            await _ofertaService.EditAsync(dto, id);
             return Ok();
         }
 
         [HttpDelete("Offer/{id}")]
-        public async Task<IActionResult> Delete(
+        public async Task<IActionResult> DeleteAsync(
             [FromRoute] int id,
             [FromServices] IOfertaService _ofertaService)
         {
             if (id == 0)
                 return BadRequest();
 
-            await _ofertaService.Delete(id);
+            await _ofertaService.DeleteAsync(id);
             return Ok();
         }
 

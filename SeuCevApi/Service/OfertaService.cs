@@ -14,24 +14,24 @@ namespace SeuCevApi.Service
             _ofertaRepository = ofertaRepository;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _ofertaRepository.Delete(model);
+            await _ofertaRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(OfferUpdateDto dto, int id)
+        public async Task EditAsync(OfferUpdateDto dto, int id)
         {
             var model = GetById(id);
 
             if (model == null)
                 throw new NullReferenceException("Id não encontrado!");
 
-            await _ofertaRepository.Edit(ConvertToModelUpdate(dto, model));
+            await _ofertaRepository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Oferta> GetAll()
@@ -44,9 +44,9 @@ namespace SeuCevApi.Service
             return _ofertaRepository.GetById(id);
         }
 
-        public async Task Save(OfferCreationDto dto)
+        public async Task SaveAsync(OfferCreationDto dto)
         {
-            await _ofertaRepository.Save(ConvertToModelCreate(dto));
+            await _ofertaRepository.SaveAsync(ConvertToModelCreate(dto));
         }
 
         private Oferta ConvertToModelCreate(OfferCreationDto dto)

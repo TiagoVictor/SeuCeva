@@ -23,7 +23,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _produtoService.Save(dto);
+            await _produtoService.SaveAsync(dto);
             return Created($"v1/Product/{dto.Nome}", dto);
         }
 
@@ -36,7 +36,7 @@ namespace SeuCevApi.Controllers
             if (!ModelState.IsValid || id == 0)
                 return BadRequest();
 
-            await _produtoService.Edit(dto, id);
+            await _produtoService.EditAsync(dto, id);
             return Ok();
         }
 
@@ -48,7 +48,7 @@ namespace SeuCevApi.Controllers
             if (id == 0)
                 return BadRequest();
 
-            await _produtoService.Delete(id);
+            await _produtoService.DeleteAsync(id);
             return Ok();
         }
 

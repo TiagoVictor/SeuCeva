@@ -14,13 +14,13 @@ namespace SeuCevApi.Data.Repository
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task Delete(Cliente cliente)
+        public async Task DeleteAsync(Cliente cliente)
         {
             _applicationDbContext.Clientes.Remove(cliente);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task Edit(Cliente cliente)
+        public async Task EditAsync(Cliente cliente)
         {
             _applicationDbContext.Clientes.Update(cliente);
             await _applicationDbContext.SaveChangesAsync();
@@ -39,7 +39,7 @@ namespace SeuCevApi.Data.Repository
             return _applicationDbContext.Clientes.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public async Task Save(Cliente cliente)
+        public async Task SaveAsync(Cliente cliente)
         {
             await _applicationDbContext.Clientes.AddAsync(cliente);
             await _applicationDbContext.SaveChangesAsync();
