@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.Dto.ClienteDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class ClienteController : ControllerBase
     {
@@ -18,35 +16,48 @@ namespace SeuCevApi.Controllers
             _clienteService = clienteService;
         }
 
-        [HttpPost("SalvaCliente")]
-        public async Task<IActionResult> Save(ClientCreationDto dto)
+        [HttpPost("Client")]
+        public async Task<IActionResult> PostAsync(
+            [FromBody] ClientCreationDto dto,
+            [FromServices] IClienteService _clienteService)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             await _clienteService.Save(dto);
-            return NoContent();
+            return Created($"v1/client/{dto.Nome}", dto);
         }
 
-        [HttpPost("EditaCliente")]
-        public async Task<IActionResult> Edit(ClientCreationDto dto)
+        [HttpPut("Client/{id}")]
+        public async Task<IActionResult> EditAsync(
+            [FromBody] ClientUpdateDto dto,
+            [FromRoute] int id,
+            [FromServices] IClienteService _clienteService)
         {
-            await _clienteService.Edit(dto);
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _clienteService.Edit(dto, id);
             return NoContent();
         }
 
-        [HttpPost("ExcluiCliente")]
-        public async Task<IActionResult> Delete(ClientCreationDto dto)
+        [HttpDelete("Client/{id}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
+            [FromServices] IClienteService _clienteService)
         {
-            await _clienteService.Delete(dto);
+            await _clienteService.Delete(id);
             return NoContent();
         }
 
-        [HttpGet("RecuperaClientes")]
-        public IEnumerable<Cliente> RecuperaTodos()
+        [HttpGet("Clients")]
+        public IEnumerable<Cliente> GetAll()
         {
             return _clienteService.GetAll();
         }
 
-        [HttpGet("RecuperaClientePorId")]
-        public Cliente RecuperaPorId(int id)
+        [HttpGet("Client/{id}")]
+        public Cliente GetById(int id)
         {
             return _clienteService.GetById(id);
         }

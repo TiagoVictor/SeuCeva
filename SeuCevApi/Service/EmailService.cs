@@ -25,7 +25,7 @@ namespace SeuCevApi.Service
             }
         }
 
-        public async Task Execute(string email, string subject, string message)
+        private async Task Execute(string email, string subject, string message)
         {
             try
             {

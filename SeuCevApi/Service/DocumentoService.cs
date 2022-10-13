@@ -1,5 +1,4 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.Dto.DocumentoDto;
@@ -15,14 +14,24 @@ namespace SeuCevApi.Service
             _documentoRepository = documentoRepository;
         }
 
-        public async Task Delete(DocumentCreationDto dto)
+        public async Task Delete(int id)
         {
-            await _documentoRepository.Delete(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _documentoRepository.Delete(model);
         }
 
-        public async Task Edit(DocumentCreationDto dto)
+        public async Task Edit(DocumentUpdateDto dto, int id)
         {
-            await _documentoRepository.Edit(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado");
+
+            await _documentoRepository.Edit(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Documento> GetAll()
@@ -37,16 +46,25 @@ namespace SeuCevApi.Service
 
         public async Task Save(DocumentCreationDto dto)
         {
-            await _documentoRepository.Save(ConvertToModel(dto));
+            await _documentoRepository.Save(ConvertToModelCreation(dto));
         }
 
-        public Documento ConvertToModel(DocumentCreationDto dto)
+        private Documento ConvertToModelCreation(DocumentCreationDto dto)
         {
             return new Documento
             {
                 Tipo = dto.Tipo,
                 Numero = dto.Numero,
             };
+        }
+
+        private Documento ConvertToModelUpdate(DocumentUpdateDto dto, Documento model)
+        {
+            model.Tipo = dto.Tipo;
+            model.Numero = dto.Numero;
+            model.Ativo = dto.Ativo;
+
+            return model;
         }
     }
 }

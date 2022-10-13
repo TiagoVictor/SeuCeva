@@ -17,7 +17,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPost("PlanType")]
-        public async Task<IActionResult> PostAsync([FromBody] PlanTypeCreationDto dto,
+        public async Task<IActionResult> PostAsync(
+            [FromBody] PlanTypeCreationDto dto,
             [FromServices] ITipoPlanoService _tipoPlanoService)
         {
             if (!ModelState.IsValid)
@@ -28,7 +29,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPut("PlanType/{id}")]
-        public async Task<IActionResult> PutAsync([FromBody] PlanTypeUpdateDto dto,
+        public async Task<IActionResult> PutAsync(
+            [FromBody] PlanTypeUpdateDto dto,
             [FromServices] ITipoPlanoService _tipoPlanoService,
             [FromRoute] int id)
         {
@@ -40,7 +42,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpDelete("PlanType/{id}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] int id,
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
             [FromServices] ITipoPlanoService _tipoPlanoService)
         {
             if (id == 0)

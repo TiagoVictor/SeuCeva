@@ -1,7 +1,6 @@
 ﻿using SeuCevApi.Data.Context;
 using SeuCevApi.Data.Repository.Interface;
 using SeuCevApi.Model;
-using System.Runtime.InteropServices;
 
 namespace SeuCevApi.Data.Repository
 {

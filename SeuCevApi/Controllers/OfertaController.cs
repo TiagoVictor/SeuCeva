@@ -17,7 +17,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPost("Offer")]
-        public async Task<IActionResult> PostAsync([FromBody] OfferCreationDto dto,
+        public async Task<IActionResult> PostAsync(
+            [FromBody] OfferCreationDto dto,
             [FromServices] IOfertaService _ofertaService)
         {
             if (!ModelState.IsValid)
@@ -28,7 +29,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPut("Offer/{id}")]
-        public async Task<IActionResult> Edit([FromBody] OfferUpdateDto dto,
+        public async Task<IActionResult> Edit(
+            [FromBody] OfferUpdateDto dto,
             [FromRoute] int id,
             [FromServices] IOfertaService _ofertaService)
         {
@@ -40,7 +42,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpDelete("Offer/{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id,
+        public async Task<IActionResult> Delete(
+            [FromRoute] int id,
             [FromServices] IOfertaService _ofertaService)
         {
             if (id == 0)

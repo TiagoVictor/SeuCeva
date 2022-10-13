@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SeuCevApi.Model
+﻿namespace SeuCevApi.Model
 {
     public class Cliente : Base
     {

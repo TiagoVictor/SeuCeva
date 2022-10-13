@@ -1,5 +1,4 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.Dto.ClienteDto;
@@ -17,14 +16,24 @@ namespace SeuCevApi.Service
             _emailServiece = emailService;
         }
 
-        public async Task Delete(ClientCreationDto dto)
+        public async Task Delete(int id)
         {
-            await _clienteRepository.Delete(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _clienteRepository.Delete(model);
         }
 
-        public async Task Edit(ClientCreationDto dto)
+        public async Task Edit(ClientUpdateDto dto, int id)
         {
-            await _clienteRepository.Edit(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado");
+
+            await _clienteRepository.Edit(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Cliente> GetAll()
@@ -40,11 +49,11 @@ namespace SeuCevApi.Service
 
         public async Task Save(ClientCreationDto dto)
         {
-            await _clienteRepository.Save(ConvertToModel(dto));
+            await _clienteRepository.Save(ConvertToModelCreation(dto));
             await _emailServiece.SendEmailAsync(dto.Email, "Criação", $"Ola, {dto.Nome} obrigado por cadastrar no SeuCeva!");
         }
 
-        private Cliente ConvertToModel(ClientCreationDto dto)
+        private Cliente ConvertToModelCreation(ClientCreationDto dto)
         {
             return new Cliente
             {
@@ -68,6 +77,33 @@ namespace SeuCevApi.Service
                     Numero = dto.DocumentoDto.Numero,
                 } }
             };
+        }
+
+        private Cliente ConvertToModelUpdate(ClientUpdateDto dto, Cliente model)
+        {
+            model.Nome = dto.Nome;
+            model.SobreNome = dto.SobreNome;
+            model.Email = dto.Email;
+            model.Idade = dto.Idade;
+            model.DtNascimento = dto.DtNascimento;
+            model.Enderecos
+                .Add(new Endereco
+                {
+                    Pais = dto.EnderecoDto.Pais,
+                    UF = dto.EnderecoDto.UF,
+                    Cidade = dto.EnderecoDto.Cidade,
+                    Rua = dto.EnderecoDto.Rua,
+                    Bairro = dto.EnderecoDto.Bairro,
+                    CEP = dto.EnderecoDto.CEP
+                });
+            model.Documentos
+                .Add(new Documento
+                {
+                    Tipo = dto.DocumentoDto.Tipo,
+                    Numero = dto.DocumentoDto.Numero,
+                });
+
+            return model;
         }
     }
 }

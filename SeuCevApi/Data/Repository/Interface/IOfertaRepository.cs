@@ -1,5 +1,4 @@
 ﻿using SeuCevApi.Model;
-using System.ComponentModel.DataAnnotations;
 
 namespace SeuCevApi.Data.Repository.Interface
 {

@@ -1,5 +1,4 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.Dto.EnderecoDto;
@@ -15,14 +14,24 @@ namespace SeuCevApi.Service
             _enderecoRepository = enderecoRepository;
         }
 
-        public async Task Delete(AddresCreationDto dto)
+        public async Task Delete(int id)
         {
-            await _enderecoRepository.Delete(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _enderecoRepository.Delete(model);
         }
 
-        public async Task Edit(AddresCreationDto dto)
+        public async Task Edit(AddresUpdateDto dto, int id)
         {
-            await _enderecoRepository.Edit(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _enderecoRepository.Edit(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Endereco> GetAll()
@@ -37,10 +46,10 @@ namespace SeuCevApi.Service
 
         public async Task Save(AddresCreationDto dto)
         {
-            await _enderecoRepository.Save(ConvertToModel(dto));
+            await _enderecoRepository.Save(ConvertToModelCreation(dto));
         }
 
-        public Endereco ConvertToModel(AddresCreationDto dto)
+        private Endereco ConvertToModelCreation(AddresCreationDto dto)
         {
             return new Endereco
             {
@@ -51,6 +60,18 @@ namespace SeuCevApi.Service
                 Bairro = dto.Bairro,
                 CEP = dto.CEP
             };
+        }
+
+        private Endereco ConvertToModelUpdate(AddresUpdateDto dto, Endereco model)
+        {
+            model.Pais = dto.Pais;
+            model.UF = dto.UF;
+            model.Cidade = dto.Cidade;
+            model.Rua = dto.Rua;
+            model.Bairro = dto.Bairro;
+            model.CEP = dto.CEP;
+
+            return model;
         }
     }
 }

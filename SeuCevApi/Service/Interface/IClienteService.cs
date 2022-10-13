@@ -6,8 +6,8 @@ namespace SeuCevApi.Service.Interface
     public interface IClienteService
     {
         public Task Save(ClientCreationDto dto);
-        public Task Delete(ClientCreationDto dto);
-        public Task Edit(ClientCreationDto dto);
+        public Task Delete(int id);
+        public Task Edit(ClientUpdateDto dto, int id);
         public IEnumerable<Cliente> GetAll();
         public Cliente GetById(int id);
     }

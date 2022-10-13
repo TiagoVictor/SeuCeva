@@ -17,7 +17,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPost("ClientType")]
-        public async Task<IActionResult> PostAsync(ClientTypeCreationDto dto,
+        public async Task<IActionResult> PostAsync(
+            [FromBody] ClientTypeCreationDto dto,
             [FromServices] ITipoClienteService _service)
         {
             if (!ModelState.IsValid)
@@ -28,7 +29,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPut("ClientType/{id}")]
-        public async Task<IActionResult> EditAsync(ClientTypeUpdate dto,
+        public async Task<IActionResult> EditAsync(
+            [FromBody] ClientTypeUpdate dto,
             [FromServices] ITipoClienteService _service,
             [FromRoute] int id)
         {
@@ -40,7 +42,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpDelete("ClientType/{id}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] int id,
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
             [FromServices] ITipoClienteService _service)
         {
             if (id == 0)

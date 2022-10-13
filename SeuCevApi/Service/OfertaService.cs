@@ -1,5 +1,4 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.Dto.OfertaDto;

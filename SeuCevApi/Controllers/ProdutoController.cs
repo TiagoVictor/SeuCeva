@@ -16,7 +16,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPost("Product")]
-        public async Task<IActionResult> PostAsync([FromBody] ProductCreationDto dto,
+        public async Task<IActionResult> PostAsync(
+            [FromBody] ProductCreationDto dto,
             [FromServices] IProdutoService _produtoService)
         {
             if (!ModelState.IsValid)
@@ -27,7 +28,8 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPut("Product/{id}")]
-        public async Task<IActionResult> EditAsync([FromServices] IProdutoService _produtoService,
+        public async Task<IActionResult> EditAsync(
+            [FromServices] IProdutoService _produtoService,
             [FromBody] ProductUpdateDto dto,
             [FromRoute] int id)
         {
@@ -39,10 +41,11 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpDelete("Product/{id}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute]int id,
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
             [FromServices] IProdutoService _produtoService)
         {
-            if(id == 0)
+            if (id == 0)
                 return BadRequest();
 
             await _produtoService.Delete(id);

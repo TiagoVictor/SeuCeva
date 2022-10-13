@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.Dto.EnderecoDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class EnderecoController : ControllerBase
     {
@@ -18,35 +16,51 @@ namespace SeuCevApi.Controllers
             _enderecoService = enderecoService;
         }
 
-        [HttpPost("SalvaEndereco")]
-        public async Task<IActionResult> Save(AddresCreationDto dto)
+        [HttpPost("Addres")]
+        public async Task<IActionResult> PostAsync(
+            [FromBody] AddresCreationDto dto,
+            [FromServices] IEnderecoService _enderecoService)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             await _enderecoService.Save(dto);
-            return NoContent();
+            return Created($"v1/addres/{dto.Rua}", dto);
         }
 
-        [HttpPost("EditaEndereco")]
-        public async Task<IActionResult> Edit(AddresCreationDto dto)
+        [HttpPut("Addres/{id}")]
+        public async Task<IActionResult> EditAsync(
+            [FromBody] AddresUpdateDto dto,
+            [FromServices] IEnderecoService _enderecoService,
+            [FromRoute] int id)
         {
-            await _enderecoService.Edit(dto);
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _enderecoService.Edit(dto, id);
             return NoContent();
         }
 
-        [HttpPost("DeletaEndereco")]
-        public async Task<IActionResult> Delete(AddresCreationDto dto)
+        [HttpDelete("Addres/{id}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
+            [FromServices] IEnderecoService _enderecoService)
         {
-            await _enderecoService.Delete(dto);
-            return NoContent();
+            if (id == 0)
+                return BadRequest();
+
+            await _enderecoService.Delete(id);
+            return Ok();
         }
 
-        [HttpGet("RecuperaTodosEnderecos")]
-        public IEnumerable<Endereco> RecuperaTodos()
+        [HttpGet("Addres")]
+        public IEnumerable<Endereco> GetAll()
         {
             return _enderecoService.GetAll();
         }
 
-        [HttpGet("RecuperaEnderecoPorId")]
-        public Endereco RecuperaPorId(int id)
+        [HttpGet("Addres/{id}")]
+        public Endereco GetById(int id)
         {
             return _enderecoService.GetById(id);
         }
