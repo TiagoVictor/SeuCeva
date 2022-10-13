@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.TipoPlanoDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class TipoPlanoController : ControllerBase
     {
@@ -17,35 +16,48 @@ namespace SeuCevApi.Controllers
             _tipoPlanoService = tipoPlanoService;
         }
 
-        [HttpPost("SalvaTipoPlano")]
-        public async Task<IActionResult> Save(TipoPlanoDto dto)
+        [HttpPost("PlanType")]
+        public async Task<IActionResult> PostAsync([FromBody] PlanTypeCreationDto dto,
+            [FromServices] ITipoPlanoService _tipoPlanoService)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             await _tipoPlanoService.Save(dto);
-            return NoContent();
+            return Created($"v1/PlanType/{dto.Descricao}", dto);
         }
 
-        [HttpPost("EditaTipoPlano")]
-        public async Task<IActionResult> Edit(TipoPlanoDto dto)
+        [HttpPut("PlanType/{id}")]
+        public async Task<IActionResult> PutAsync([FromBody] PlanTypeUpdateDto dto,
+            [FromServices] ITipoPlanoService _tipoPlanoService,
+            [FromRoute] int id)
         {
-            await _tipoPlanoService.Edit(dto);
-            return NoContent();
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _tipoPlanoService.Edit(dto, id);
+            return Ok();
         }
 
-        [HttpPost("DeletaTipoPlano")]
-        public async Task<IActionResult> Delete(TipoPlanoDto dto)
+        [HttpDelete("PlanType/{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id,
+            [FromServices] ITipoPlanoService _tipoPlanoService)
         {
-            await _tipoPlanoService.Delete(dto);
+            if (id == 0)
+                return BadRequest();
+
+            await _tipoPlanoService.Delete(id);
             return NoContent();
         }
 
-        [HttpGet("RecuperaTodosTipoPlano")]
-        public IEnumerable<TipoPlano> RecuperaTodos()
+        [HttpGet("PlanType")]
+        public IEnumerable<TipoPlano> GetAll()
         {
             return _tipoPlanoService.GetAll();
         }
 
-        [HttpGet("RecuperaTipoPlanoPorId")]
-        public TipoPlano RecuperaPorId(int id)
+        [HttpGet("PlanType/{id}")]
+        public TipoPlano GetById(int id)
         {
             return _tipoPlanoService.GetById(id);
         }

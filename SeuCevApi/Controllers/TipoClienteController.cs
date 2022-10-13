@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.TipoClienteDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class TipoClienteController : ControllerBase
     {
@@ -17,35 +16,48 @@ namespace SeuCevApi.Controllers
             _service = tipoClienteService;
         }
 
-        [HttpPost("SalvaTipoCliente")]
-        public async Task<IActionResult> Save(TipoClienteDto dto)
+        [HttpPost("ClientType")]
+        public async Task<IActionResult> PostAsync(ClientTypeCreationDto dto,
+            [FromServices] ITipoClienteService _service)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             await _service.Save(dto);
-            return NoContent();
+            return Created($"v1/ClientType/{dto.Descricao}", dto);
         }
 
-        [HttpPost("DeletaTipoCliente")]
-        public async Task<IActionResult> Delete(TipoClienteDto dto)
+        [HttpPut("ClientType/{id}")]
+        public async Task<IActionResult> EditAsync(ClientTypeUpdate dto,
+            [FromServices] ITipoClienteService _service,
+            [FromRoute] int id)
         {
-            await _service.Delete(dto);
-            return NoContent();
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _service.Edit(dto, id);
+            return Ok();
         }
 
-        [HttpPost("EditaTiposClientes")]
-        public async Task<IActionResult> Edit(TipoClienteDto dto)
+        [HttpDelete("ClientType/{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id,
+            [FromServices] ITipoClienteService _service)
         {
-            await _service.Edit(dto);
+            if (id == 0)
+                return BadRequest();
+
+            await _service.Delete(id);
             return NoContent();
         }
 
-        [HttpGet("RecuperaTodosTiposClientes")]
-        public IEnumerable<TipoCliente> RecuperaTodos()
+        [HttpGet("ClientTypes")]
+        public IEnumerable<TipoCliente> GetAll()
         {
             return _service.GetAll();
         }
 
-        [HttpGet("RecuperaTipoClientePorId")]
-        public TipoCliente RecuperaPorId(int id)
+        [HttpGet("ClientTypes/{id}")]
+        public TipoCliente GetById(int id)
         {
             return _service.GetById(id);
         }

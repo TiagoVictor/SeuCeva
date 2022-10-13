@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.ClienteDto;
 
 namespace SeuCevApi.Controllers
 {
@@ -18,21 +19,21 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPost("SalvaCliente")]
-        public async Task<IActionResult> Save(ClienteDto dto)
+        public async Task<IActionResult> Save(ClientCreationDto dto)
         {
             await _clienteService.Save(dto);
             return NoContent();
         }
 
         [HttpPost("EditaCliente")]
-        public async Task<IActionResult> Edit(ClienteDto dto)
+        public async Task<IActionResult> Edit(ClientCreationDto dto)
         {
             await _clienteService.Edit(dto);
             return NoContent();
         }
 
         [HttpPost("ExcluiCliente")]
-        public async Task<IActionResult> Delete(ClienteDto dto)
+        public async Task<IActionResult> Delete(ClientCreationDto dto)
         {
             await _clienteService.Delete(dto);
             return NoContent();

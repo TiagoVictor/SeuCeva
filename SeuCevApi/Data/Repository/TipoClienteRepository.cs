@@ -37,7 +37,6 @@ namespace SeuCevApi.Data.Repository
 
         public async Task Save(TipoCliente tipoCliente)
         {
-            tipoCliente.RegistrationDate = DateTime.UtcNow;
             await _applicationDbContext.TiposClientes.AddAsync(tipoCliente);
             await _applicationDbContext.SaveChangesAsync();
         }

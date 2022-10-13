@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.DocumentoDto;
 
 namespace SeuCevApi.Controllers
 {
@@ -18,21 +19,21 @@ namespace SeuCevApi.Controllers
         }
 
         [HttpPost("SalvaDocumento")]
-        public async Task<IActionResult> Save(DocumentoDto dto)
+        public async Task<IActionResult> Save(DocumentCreationDto dto)
         {
             await _documentoService.Save(dto);
             return NoContent();
         }
 
         [HttpPost("EditaDocumento")]
-        public async Task<IActionResult> Edit(DocumentoDto dto)
+        public async Task<IActionResult> Edit(DocumentCreationDto dto)
         {
             await _documentoService.Edit(dto);
             return NoContent();
         }
 
         [HttpPost("ExcluiDocumento")]
-        public async Task<IActionResult> Delete(DocumentoDto dto)
+        public async Task<IActionResult> Delete(DocumentCreationDto dto)
         {
             await _documentoService.Delete(dto);
             return NoContent();

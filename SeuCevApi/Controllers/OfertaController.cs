@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.OfertaDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class OfertaController : ControllerBase
     {
@@ -17,35 +16,48 @@ namespace SeuCevApi.Controllers
             _ofertaService = ofertaService;
         }
 
-        [HttpPost("SalvaOferta")]
-        public async Task<IActionResult> Save(OfertaDto dto)
+        [HttpPost("Offer")]
+        public async Task<IActionResult> PostAsync([FromBody] OfferCreationDto dto,
+            [FromServices] IOfertaService _ofertaService)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             await _ofertaService.Save(dto);
-            return NoContent();
+            return Created($"v1/offer/{dto.Titulo}", dto);
         }
 
-        [HttpPost("EditaOferta")]
-        public async Task<IActionResult> Edit(OfertaDto dto)
+        [HttpPut("Offer/{id}")]
+        public async Task<IActionResult> Edit([FromBody] OfferUpdateDto dto,
+            [FromRoute] int id,
+            [FromServices] IOfertaService _ofertaService)
         {
-            await _ofertaService.Edit(dto);
-            return NoContent();
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _ofertaService.Edit(dto, id);
+            return Ok();
         }
 
-        [HttpPost("DeletaOferta")]
-        public async Task<IActionResult> Delete(OfertaDto dto)
+        [HttpDelete("Offer/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id,
+            [FromServices] IOfertaService _ofertaService)
         {
-            await _ofertaService.Delete(dto);
-            return NoContent();
+            if (id == 0)
+                return BadRequest();
+
+            await _ofertaService.Delete(id);
+            return Ok();
         }
 
-        [HttpGet("RecuperaTodasOfertas")]
-        public IEnumerable<Oferta> RecuperaTodos()
+        [HttpGet("Offers")]
+        public IEnumerable<Oferta> GetAll()
         {
             return _ofertaService.GetAll();
         }
 
-        [HttpGet("RecuperaOfertaPorId")]
-        public Oferta RecuperaPorId(int id)
+        [HttpGet("Offer/{id}")]
+        public Oferta GetById(int id)
         {
             return _ofertaService.GetById(id);
         }

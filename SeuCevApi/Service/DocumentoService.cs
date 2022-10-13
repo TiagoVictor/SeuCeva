@@ -2,6 +2,7 @@
 using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.DocumentoDto;
 
 namespace SeuCevApi.Service
 {
@@ -14,12 +15,12 @@ namespace SeuCevApi.Service
             _documentoRepository = documentoRepository;
         }
 
-        public async Task Delete(DocumentoDto dto)
+        public async Task Delete(DocumentCreationDto dto)
         {
             await _documentoRepository.Delete(ConvertToModel(dto));
         }
 
-        public async Task Edit(DocumentoDto dto)
+        public async Task Edit(DocumentCreationDto dto)
         {
             await _documentoRepository.Edit(ConvertToModel(dto));
         }
@@ -34,19 +35,17 @@ namespace SeuCevApi.Service
             return _documentoRepository.GetById(id);
         }
 
-        public async Task Save(DocumentoDto dto)
+        public async Task Save(DocumentCreationDto dto)
         {
             await _documentoRepository.Save(ConvertToModel(dto));
         }
 
-        public Documento ConvertToModel(DocumentoDto dto)
+        public Documento ConvertToModel(DocumentCreationDto dto)
         {
             return new Documento
             {
-                Id = dto.Id,
                 Tipo = dto.Tipo,
                 Numero = dto.Numero,
-                Ativo = dto.Ativo
             };
         }
     }
