@@ -1,14 +1,14 @@
-﻿using SeuCevApi.Dto;
-using SeuCevApi.Model;
+﻿using SeuCevApi.Model;
+using static SeuCevApi.Dto.OfertaDto;
 
 namespace SeuCevApi.Service.Interface
 {
     public interface IOfertaService
     {
-        public Task Save(OfertaDto dto);
-        public Task Delete(OfertaDto dto);
-        public Task Edit(OfertaDto dto);
-        public IQueryable<Oferta> GetAll();
+        public Task SaveAsync(OfferCreationDto dto);
+        public Task DeleteAsync(int id);
+        public Task EditAsync(OfferUpdateDto dto, int id);
+        public IEnumerable<Oferta> GetAll();
         public Oferta GetById(int id);
     }
 }

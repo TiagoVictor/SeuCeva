@@ -1,7 +1,20 @@
-﻿namespace SeuCevApi.Dto
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SeuCevApi.Dto
 {
-    public class TipoPlanoDto : BaseDto
+    public class TipoPlanoDto
     {
-        public string Descricao { get; set; }
+        public class PlanTypeCreationDto
+        {
+            [Required]
+            public string Descricao { get; set; }
+        }
+
+        public class PlanTypeUpdateDto
+        {
+            [Required]
+            public string Descricao { get; set; }
+            public bool Ativo { get; set; }
+        }
     }
 }

@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.DocumentoDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class DocumentoController : ControllerBase
     {
@@ -17,36 +16,52 @@ namespace SeuCevApi.Controllers
             _documentoService = documentoService;
         }
 
-        [HttpPost("SalvaDocumento")]
-        public async Task<IActionResult> Save(DocumentoDto dto)
+        [HttpPost("Document")]
+        public async Task<IActionResult> PostAsync(
+            [FromBody] DocumentCreationDto dto,
+            [FromServices] IDocumentoService _documentoService)
         {
-            await _documentoService.Save(dto);
-            return NoContent();
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            await _documentoService.SaveAsync(dto);
+            return Created($"v1/document/{dto.Tipo}", dto);
         }
 
-        [HttpPost("EditaDocumento")]
-        public async Task<IActionResult> Edit(DocumentoDto dto)
+        [HttpPut("Document/{id}")]
+        public async Task<IActionResult> EditAsync(
+           [FromBody] DocumentUpdateDto dto,
+           [FromRoute] int id,
+           [FromServices] IDocumentoService _documentoService)
         {
-            await _documentoService.Edit(dto);
-            return NoContent();
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _documentoService.EditAsync(dto, id);
+            return Ok();
         }
 
-        [HttpPost("ExcluiDocumento")]
-        public async Task<IActionResult> Delete(DocumentoDto dto)
+        [HttpDelete("Document/{id}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
+            [FromServices] IDocumentoService _documentoService)
         {
-            await _documentoService.Delete(dto);
-            return NoContent();
+            if (id == 0)
+                return BadRequest();
+
+            await _documentoService.DeleteAsync(id);
+            return Ok();
         }
 
-        [HttpGet("RecuperaTodosDocumentos")]
-        public IEnumerable<Documento> RecuperaTodos()
+        [HttpGet("Documents")]
+        public IEnumerable<Documento> GetAll()
         {
             return _documentoService.GetAll();
         }
 
 
-        [HttpGet("RecuperaDocumentoPorId")]
-        public Documento RecuperaPorId(int id)
+        [HttpGet("Document/{id}")]
+        public Documento GetById(int id)
         {
             return _documentoService.GetById(id);
         }

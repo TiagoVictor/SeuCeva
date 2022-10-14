@@ -1,14 +1,14 @@
-﻿using SeuCevApi.Dto;
-using SeuCevApi.Model;
+﻿using SeuCevApi.Model;
+using static SeuCevApi.Dto.ProdutoDto;
 
 namespace SeuCevApi.Service.Interface
 {
     public interface IProdutoService
     {
-        public Task Save(ProdutoDto produto);
-        public Task Delete(ProdutoDto produto);
-        public Task Edit(ProdutoDto produto);
-        public IQueryable<Produto> GetAll();
+        public Task SaveAsync(ProductCreationDto produto);
+        public Task DeleteAsync(int id);
+        public Task EditAsync(ProductUpdateDto produto, int id);
+        public IEnumerable<Produto> GetAll();
         public Produto GetById(int id);
     }
 }

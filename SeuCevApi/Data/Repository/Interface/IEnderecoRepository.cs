@@ -4,10 +4,10 @@ namespace SeuCevApi.Data.Repository.Interface
 {
     public interface IEnderecoRepository
     {
-        public Task Save(Endereco endereco);
-        public Task Delete(Endereco endereco);
-        public Task Edit(Endereco endereco);
-        public IQueryable<Endereco> GetAll();
+        public Task SaveAsync(Endereco endereco);
+        public Task DeleteAsync(Endereco endereco);
+        public Task EditAsync(Endereco endereco);
+        public IEnumerable<Endereco> GetAll();
         public Endereco GetById(int id);
     }
 }

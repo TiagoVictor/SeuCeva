@@ -1,7 +1,7 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.DocumentoDto;
 
 namespace SeuCevApi.Service
 {
@@ -14,17 +14,27 @@ namespace SeuCevApi.Service
             _documentoRepository = documentoRepository;
         }
 
-        public async Task Delete(DocumentoDto dto)
+        public async Task DeleteAsync(int id)
         {
-            await _documentoRepository.Delete(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _documentoRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(DocumentoDto dto)
+        public async Task EditAsync(DocumentUpdateDto dto, int id)
         {
-            await _documentoRepository.Edit(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado");
+
+            await _documentoRepository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
-        public IQueryable<Documento> GetAll()
+        public IEnumerable<Documento> GetAll()
         {
             return _documentoRepository.GetAll();
         }
@@ -34,20 +44,27 @@ namespace SeuCevApi.Service
             return _documentoRepository.GetById(id);
         }
 
-        public async Task Save(DocumentoDto dto)
+        public async Task SaveAsync(DocumentCreationDto dto)
         {
-            await _documentoRepository.Save(ConvertToModel(dto));
+            await _documentoRepository.SaveAsync(ConvertToModelCreation(dto));
         }
 
-        public Documento ConvertToModel(DocumentoDto dto)
+        private Documento ConvertToModelCreation(DocumentCreationDto dto)
         {
             return new Documento
             {
-                Id = dto.Id,
                 Tipo = dto.Tipo,
                 Numero = dto.Numero,
-                Ativo = dto.Ativo
             };
+        }
+
+        private Documento ConvertToModelUpdate(DocumentUpdateDto dto, Documento model)
+        {
+            model.Tipo = dto.Tipo;
+            model.Numero = dto.Numero;
+            model.Ativo = dto.Ativo;
+
+            return model;
         }
     }
 }
