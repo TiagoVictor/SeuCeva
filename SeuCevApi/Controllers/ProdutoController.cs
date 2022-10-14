@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SeuCevApi.Dto;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.ProdutoDto;
 
 namespace SeuCevApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1")]
     [ApiController]
     public class ProdutoController : ControllerBase
     {
@@ -16,35 +15,51 @@ namespace SeuCevApi.Controllers
             _produtoService = produtoService;
         }
 
-        [HttpPost("SalvaProduto")]
-        public async Task<IActionResult> Save(ProdutoDto dto)
+        [HttpPost("Product")]
+        public async Task<IActionResult> PostAsync(
+            [FromBody] ProductCreationDto dto,
+            [FromServices] IProdutoService _produtoService)
         {
-            await _produtoService.Save(dto);
-            return NoContent();
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            await _produtoService.SaveAsync(dto);
+            return Created($"v1/Product/{dto.Nome}", dto);
         }
 
-        [HttpPost("DeletaProduto")]
-        public async Task<IActionResult> Delete(ProdutoDto dto)
+        [HttpPut("Product/{id}")]
+        public async Task<IActionResult> EditAsync(
+            [FromServices] IProdutoService _produtoService,
+            [FromBody] ProductUpdateDto dto,
+            [FromRoute] int id)
         {
-            await _produtoService.Delete(dto);
-            return NoContent();
+            if (!ModelState.IsValid || id == 0)
+                return BadRequest();
+
+            await _produtoService.EditAsync(dto, id);
+            return Ok();
         }
 
-        [HttpPost("EditaProduto")]
-        public async Task<IActionResult> Edit(ProdutoDto dto)
+        [HttpDelete("Product/{id}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
+            [FromServices] IProdutoService _produtoService)
         {
-            await _produtoService.Edit(dto);
-            return NoContent();
+            if (id == 0)
+                return BadRequest();
+
+            await _produtoService.DeleteAsync(id);
+            return Ok();
         }
 
-        [HttpGet("RecuperaTodosProdutos")]
-        public IEnumerable<Produto> RecuperaTodos()
+        [HttpGet("Products")]
+        public IEnumerable<Produto> GetAll()
         {
             return _produtoService.GetAll();
         }
 
-        [HttpGet("RecuperaProdutosPorId")]
-        public Produto RecuperaPorId(int id)
+        [HttpGet("Product/{id}")]
+        public Produto GetById(int id)
         {
             return _produtoService.GetById(id);
         }

@@ -1,7 +1,7 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.TipoPlanoDto;
 
 namespace SeuCevApi.Service
 {
@@ -14,14 +14,24 @@ namespace SeuCevApi.Service
             _repository = repository;
         }
 
-        public async Task Delete(TipoPlanoDto dto)
+        public async Task DeleteAsync(int id)
         {
-            await _repository.Delete(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _repository.DeleteAsync(model);
         }
 
-        public async Task Edit(TipoPlanoDto dto)
+        public async Task EditAsync(PlanTypeUpdateDto dto, int id)
         {
-            await _repository.Edit(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _repository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<TipoPlano> GetAll()
@@ -34,19 +44,24 @@ namespace SeuCevApi.Service
             return _repository.GetById(id);
         }
 
-        public async Task Save(TipoPlanoDto dto)
+        public async Task SaveAsync(PlanTypeCreationDto dto)
         {
-            await _repository.Save(ConvertToModel(dto));
+            await _repository.SaveAsync(ConvertToModelSave(dto));
         }
 
-        private TipoPlano ConvertToModel(TipoPlanoDto dto)
+        private TipoPlano ConvertToModelSave(PlanTypeCreationDto dto)
         {
             return new TipoPlano
             {
-                Id = dto.Id,
-                Descricao = dto.Descricao,
-                Ativo = dto.Ativo
+                Descricao = dto.Descricao
             };
+        }
+
+        private TipoPlano ConvertToModelUpdate(PlanTypeUpdateDto dto, TipoPlano model)
+        {
+            model.Descricao = dto.Descricao;
+            model.Ativo = dto.Ativo;
+            return model;
         }
     }
 }

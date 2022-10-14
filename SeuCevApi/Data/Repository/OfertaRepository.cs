@@ -13,13 +13,13 @@ namespace SeuCevApi.Data.Repository
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task Delete(Oferta oferta)
+        public async Task DeleteAsync(Oferta oferta)
         {
             _applicationDbContext.Ofertas.Remove(oferta);
             await _applicationDbContext.SaveChangesAsync();
         }
 
-        public async Task Edit(Oferta oferta)
+        public async Task EditAsync(Oferta oferta)
         {
             _applicationDbContext.Ofertas.Update(oferta);
             await _applicationDbContext.SaveChangesAsync();
@@ -35,9 +35,8 @@ namespace SeuCevApi.Data.Repository
             return _applicationDbContext.Ofertas.Where(x => x.Id == id).FirstOrDefault();
         }
 
-        public async Task Save(Oferta oferta)
+        public async Task SaveAsync(Oferta oferta)
         {
-            oferta.RegistrationDate = DateTime.UtcNow;
             await _applicationDbContext.Ofertas.AddAsync(oferta);
             await _applicationDbContext.SaveChangesAsync();
         }

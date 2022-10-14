@@ -1,7 +1,7 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.OfertaDto;
 
 namespace SeuCevApi.Service
 {
@@ -14,14 +14,24 @@ namespace SeuCevApi.Service
             _ofertaRepository = ofertaRepository;
         }
 
-        public async Task Delete(OfertaDto dto)
+        public async Task DeleteAsync(int id)
         {
-            await _ofertaRepository.Delete(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _ofertaRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(OfertaDto dto)
+        public async Task EditAsync(OfferUpdateDto dto, int id)
         {
-            await _ofertaRepository.Edit(ConvertToModel(dto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _ofertaRepository.EditAsync(ConvertToModelUpdate(dto, model));
         }
 
         public IEnumerable<Oferta> GetAll()
@@ -34,22 +44,30 @@ namespace SeuCevApi.Service
             return _ofertaRepository.GetById(id);
         }
 
-        public async Task Save(OfertaDto dto)
+        public async Task SaveAsync(OfferCreationDto dto)
         {
-            await _ofertaRepository.Save(ConvertToModel(dto));
+            await _ofertaRepository.SaveAsync(ConvertToModelCreate(dto));
         }
 
-        private Oferta ConvertToModel(OfertaDto dto)
+        private Oferta ConvertToModelCreate(OfferCreationDto dto)
         {
             return new Oferta
             {
-                Id = dto.Id,
                 Titulo = dto.Titulo,
                 Descricao = dto.Descricao,
                 Quantidade = dto.Quantidade,
                 Alcance = dto.Alcance,
-                Ativo = dto.Ativo
             };
+        }
+
+        private Oferta ConvertToModelUpdate(OfferUpdateDto dto, Oferta model)
+        {
+            model.Ativo = dto.Ativo;
+            model.Descricao = dto.Descricao;
+            model.Titulo = dto.Titulo;
+            model.Alcance = dto.Alcance;
+
+            return model;
         }
     }
 }

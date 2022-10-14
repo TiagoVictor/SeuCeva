@@ -1,7 +1,7 @@
 ﻿using SeuCevApi.Data.Repository.Interface;
-using SeuCevApi.Dto;
 using SeuCevApi.Model;
 using SeuCevApi.Service.Interface;
+using static SeuCevApi.Dto.ProdutoDto;
 
 namespace SeuCevApi.Service
 {
@@ -14,14 +14,24 @@ namespace SeuCevApi.Service
             _produtoRepository = produtoRepository;
         }
 
-        public async Task Delete(ProdutoDto produto)
+        public async Task DeleteAsync(int id)
         {
-            await _produtoRepository.Delete(ConvertToModel(produto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _produtoRepository.DeleteAsync(model);
         }
 
-        public async Task Edit(ProdutoDto produto)
+        public async Task EditAsync(ProductUpdateDto produto, int id)
         {
-            await _produtoRepository.Edit(ConvertToModel(produto));
+            var model = GetById(id);
+
+            if (model == null)
+                throw new NullReferenceException("Id não encontrado!");
+
+            await _produtoRepository.EditAsync(ConverToModelUpdate(produto, model));
         }
 
         public IEnumerable<Produto> GetAll()
@@ -34,20 +44,26 @@ namespace SeuCevApi.Service
             return _produtoRepository.GetById(id);
         }
 
-        public async Task Save(ProdutoDto produto)
+        public async Task SaveAsync(ProductCreationDto dto)
         {
-            await _produtoRepository.Save(ConvertToModel(produto));
+            await _produtoRepository.SaveAsync(ConvertToModelCreation(dto));
         }
 
-        private Produto ConvertToModel(ProdutoDto dto)
+        private Produto ConvertToModelCreation(ProductCreationDto dto)
         {
             return new Produto
             {
-                Id = dto.Id,
                 Nome = dto.Nome,
                 Descricao = dto.Descricao,
-                Ativo = dto.Ativo
             };
+        }
+
+        private Produto ConverToModelUpdate(ProductUpdateDto dto, Produto model)
+        {
+            model.Descricao = dto.Descricao;
+            model.Ativo = dto.Ativo;
+
+            return model;
         }
     }
 }
