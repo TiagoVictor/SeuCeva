@@ -47,6 +47,11 @@ namespace SeuCevApi.Service
             return _clienteRepository.GetById(id);
         }
 
+        public Task<bool> HasCreated(LoginDto cliente)
+        {
+            return _clienteRepository.HasCreated(ConvertToModelLogin(cliente));
+        }
+
         public async Task SaveAsync(ClientCreationDto dto)
         {
             await _clienteRepository.SaveAsync(ConvertToModelCreation(dto));
@@ -60,6 +65,7 @@ namespace SeuCevApi.Service
                 Nome = dto.Nome,
                 SobreNome = dto.SobreNome,
                 Email = dto.Email,
+                PassWord = dto.Password,
                 Idade = dto.Idade,
                 DtNascimento = dto.DtNascimento,
                 Enderecos = {new Endereco
@@ -84,6 +90,7 @@ namespace SeuCevApi.Service
             model.Nome = dto.Nome;
             model.SobreNome = dto.SobreNome;
             model.Email = dto.Email;
+            model.PassWord = dto.Password;
             model.Idade = dto.Idade;
             model.DtNascimento = dto.DtNascimento;
             model.Enderecos
@@ -104,6 +111,15 @@ namespace SeuCevApi.Service
                 });
 
             return model;
+        }
+
+        private Cliente ConvertToModelLogin(LoginDto dto)
+        {
+            return new Cliente
+            {
+                Email = dto.Login,
+                PassWord = dto.Password
+            };
         }
     }
 }

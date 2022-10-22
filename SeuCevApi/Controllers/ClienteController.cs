@@ -61,5 +61,22 @@ namespace SeuCevApi.Controllers
         {
             return _clienteService.GetById(id);
         }
+
+        [HttpGet("Client/Login")]
+        public async Task<IActionResult> Login(
+            string name,
+            string password,
+            [FromServices] IClienteService _clienteService)
+        {
+
+            var dto = new LoginDto();
+            dto.Login = name;
+            dto.Password = password;
+
+            if(await _clienteService.HasCreated(dto))
+                return Ok();
+
+            return BadRequest();
+        }
     }
 }
