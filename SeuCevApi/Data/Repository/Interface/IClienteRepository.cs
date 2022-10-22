@@ -9,5 +9,6 @@ namespace SeuCevApi.Data.Repository.Interface
         public Task EditAsync(Cliente cliente);
         public IEnumerable<Cliente> GetAll();
         public Cliente GetById(int id);
+        public Task<bool> HasCreated(Cliente cliente);
     }
 }
