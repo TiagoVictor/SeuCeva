@@ -10,5 +10,6 @@ namespace SeuCevApi.Service.Interface
         public Task EditAsync(ClientUpdateDto dto, int id);
         public IEnumerable<Cliente> GetAll();
         public Cliente GetById(int id);
+        public Task<bool> HasCreated(LoginDto cliente);
     }
 }

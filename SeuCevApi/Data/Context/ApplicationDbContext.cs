@@ -26,6 +26,7 @@ namespace SeuCevApi.Data.Context
                 p.Property(x => x.SobreNome).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.Idade).HasColumnType("VARCHAR(8)").IsRequired();
                 p.Property(x => x.Email).HasColumnType("VARCHAR(255)").IsRequired();
+                p.Property(x => x.PassWord).HasColumnType("VARCHAR(255)").IsRequired();
                 p.Property(x => x.DtNascimento);
                 p.Property(x => x.Ativo);
                 p.HasKey(x => x.Id);

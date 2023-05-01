@@ -21,6 +21,9 @@ namespace SeuCevApi.Dto
             public string Email { get; set; }
 
             [Required]
+            public string Password { get; set; }
+
+            [Required]
             public DateTime DtNascimento { get; set; }
 
             [Required]
@@ -45,6 +48,9 @@ namespace SeuCevApi.Dto
             public string Email { get; set; }
 
             [Required]
+            public string Password { get; set; }
+
+            [Required]
             public DateTime DtNascimento { get; set; }
 
             [Required]
@@ -55,6 +61,12 @@ namespace SeuCevApi.Dto
 
             [Required]
             public bool Ativo { get; set; }
+        }
+
+        public class LoginDto
+        {
+            public string Login { get; set; }
+            public string Password { get; set; }
         }
     }
 }

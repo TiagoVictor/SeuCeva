@@ -39,6 +39,12 @@ namespace SeuCevApi.Data.Repository
             return _applicationDbContext.Clientes.Where(x => x.Id == id).FirstOrDefault();
         }
 
+        public Task<bool> HasCreated(Cliente cliente)
+        {
+            return _applicationDbContext.Clientes
+                .Where(x => x.Email == cliente.Email && x.PassWord == cliente.PassWord).AnyAsync();
+        }
+
         public async Task SaveAsync(Cliente cliente)
         {
             await _applicationDbContext.Clientes.AddAsync(cliente);
