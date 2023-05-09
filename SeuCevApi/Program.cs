@@ -7,7 +7,18 @@ using SeuCevApi.Service;
 using SeuCevApi.Service.Interface;
 using static SeuCevApi.AppSettings;
 
+var MyAllowSpecifucOrigins = "_MyAllowSpecifucOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecifucOrigins, policy =>
+    {
+        policy.WithOrigins("http://localhost:3001","http://localhost:3001");
+    });
+});
 
 // Add services to the container.
 builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
@@ -55,5 +66,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors(MyAllowSpecifucOrigins);
 
 app.Run();
