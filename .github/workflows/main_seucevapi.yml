@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'seucevapi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5D9554F00F044FA1ADAA7361917B94DD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5084996FBDA0492FA06BA68D4681563B }}
           package: .
